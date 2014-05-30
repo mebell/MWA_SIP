@@ -26,11 +26,12 @@ def read_parset(parset_file):
     return config_dict
 
 ####################################################
-
 # Read the location parset to find the paths
 locs = read_parset(loc_parset_file)
 SIP_home= = locs['SIP_home']
 error_logs = locs['error_logs']
+
+####################################################
 
 # Work out which GPS ID / datafile we are going to work on
 id_file = open(SIP_home+'/obs_id_list.txt', 'r')
