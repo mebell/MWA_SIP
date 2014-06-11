@@ -20,14 +20,17 @@ import mwapy
 
 ############################################
 ##### Configuration-dependent path ########
-# The pipeline must know where your parset file lives. 
+#Parset files path(s)
 
-parset_file    = '/home/562/meb562/SIP/parset.txt'
+loc_parset_file    = '/home/562/meb562/MWA_SIP/locs_parset.txt'
+parset_file    = '/home/562/meb562/MWA_SIP/parset.txt'
 
-############################################
-######## Get parameter set file ###########
+######## Read parameter set file ###########
 
-def read_config():
+def read_parset(parset_file):
+    """
+     Read the parameter file defined in parset file path and return args
+    """
     print 'Reading parameter set file'
     f = open(parset_file,'r')
     config_dict = {}
@@ -41,28 +44,30 @@ def read_config():
 
 ##############################################
 
-params = read_config()
-results_dir = params['results_dir']
-
-##############################################
-
 def autoreduce(fitsfile, expedition, dosub, doimage, dopbcor, out_dir):
     '''
     Task to reduce a given uvfits file using the settings defined in parset.txt.
     '''
     ms=None
+    params = read_parset(parset_file)
     print 'Starting autoreduce (function:autoreduce)'
     vis = fitsfile
     filename = obspath.split('/')[-1]
-    get_field_name = vishead(vis=vis, mode='get', hdkey='source_name')
-    field_name = get_field_name[0][0]
-    print 'Observation ID = '+field_name 
+    doSplit = params['doSplit']
+    split_uv_range = params['split_uv_range'] 
+    if doSplit:
+       print 'Splitting out baslines with range:'
+       print split_uv_range
+       os.system('rm -rf temp.ms')
+       os.system('mv '+fitsfile+' temp.ms')
+       split(vis='temp.ms', outputvis=fitsfile, uvrange=split_uv_range, keepflags=True, datacolumn ='data')
+       os.system('rm -rf temp.ms')
     print 'Running Flagging'
     autocal(vis)    
     print "Calibration finished (function:autoreduce)"
     #### Split the data into frequency bins ###
     if dosub:
-        params = read_config()
+        #params = read_config(parset_file)
         nfreqs = params['nfreqs']
         freqbin=768/nfreqs
         splitvises=[]
@@ -78,10 +83,10 @@ def autoreduce(fitsfile, expedition, dosub, doimage, dopbcor, out_dir):
     if doimage:
         #### Initialise list
         threshold=[0,0,0,0,0]
-        params = read_config()
+        params = read_parset(parset_file)
         #### New addition - find initial r.m.s. then clean down to it next time
         if dormsfind:
-            params = read_config()
+            #params = read_config(parset_file)
         #### Weighting should be the same
             cleanweight=params['cleanweight']   
             robust = params['robust']
@@ -150,7 +155,6 @@ def autoreduce(fitsfile, expedition, dosub, doimage, dopbcor, out_dir):
         #### NITER should be high, as we are now cleaning down to the noise
             niter=20000
         else:
-            params = read_config()
             all_stokes = params['stokes']
             s=0
             for stokes in all_stokes:
@@ -159,7 +163,7 @@ def autoreduce(fitsfile, expedition, dosub, doimage, dopbcor, out_dir):
             niter = params['niter']
         #### Imager settings ####
         #### Move these and other settings to a parset file outside the script.
-        params = read_config() 
+        #params = read_config() 
         im_uvrange = params['im_uvrange']
         cleanweight=params['cleanweight']   
         imsize = params['imsize']
@@ -190,10 +194,19 @@ def autoreduce(fitsfile, expedition, dosub, doimage, dopbcor, out_dir):
             imagename = 'f_all_'+stokes
             thresh=str(threshold[s])+'Jy'
             print 'Imaging full bandwidth image with settings: imsize = '+str(imsize)+', cell = '+str(cell)+', niter = '+str(niter)+', clean threshold = '+thresh + ', wprojplanes = '+str(wprojplanes) + ', Stokes= '+str(stokes)
+            robust = float(robust)
+            print 'Robust = '+str(robust)
             clean(vis=vis,imagename=imagename,mode=mode,gridmode=gridmode, wprojplanes=wprojplanes, facets=facets, niter=niter, threshold=thresh, psfmode=psfmode,imagermode=imagermode,cyclefactor=cyclefactor,interactive=False,cell=cell,imsize=imsize,stokes=stokes,weighting=cleanweight,robust=robust,pbcor=False,selectdata=True, uvrange=im_uvrange)
-            outimage=obsid+'_'+stokes+'.fits'
+            if robust < 0:
+               robust = str(robust)
+               robust_str = robust.split('-')[1]
+               outimage = str(obsid)+'_C_bm'+str(robust_str)+'_'+stokes+'.fits'
+            else: 
+               outimage = str(obsid)+'_C_bp'+str(robust)+'_'+stokes+'.fits'
+            #outimage=obsid+'_'+stokes+'.fits'
             imagename=imagename+".image"
             execfile('/short/ek6/MWA_Code/MWA_Tools/scripts/casa_fixhdr.py')
+            #exportfits(fitsimage=outimage,imagename=imagename+".image",stokeslast=False,overwrite=True)
             os.system('mv f_all_'+stokes+'.fits '+outimage)
             #exportfits(fitsimage=outimage,imagename=imagename+".image",stokeslast=False,overwrite=True)
             out_images.append(outimage)
@@ -260,8 +273,8 @@ def autoreduce(fitsfile, expedition, dosub, doimage, dopbcor, out_dir):
             print 'Skipping subband image production stage (function:autoreduce)'
         ######### Merge fits files ##########
         cube = params['cube']
-        master_sync = params['master_sync']
-        master_sync_dir = params['master_sync_dir']
+        #master_sync = params['master_sync']
+        #master_sync_dir = params['master_sync_dir']
         if cube:
 		print 'Merging all images in to one fits image (function:autoreduce)'
 		print 'INFO: Each subband will be stored as a seprerate Extension'
@@ -270,12 +283,12 @@ def autoreduce(fitsfile, expedition, dosub, doimage, dopbcor, out_dir):
 		print 'Merging beam files together'
 		merge_all_fits(beam_images, beam_stokes,'beam_'+filename+'.fits', Ext_label)
 		print 'Moving final image(s) to results folder ('+out_dir+')'
-		shutil.copy(UVFITS_Scratch+'/'+filename+'.fits',out_dir)
-		shutil.copy(UVFITS_Scratch+'/'+'beam_'+filename+'.fits',out_dir)
+		shutil.copy(job_path+'/'+filename+'.fits',out_dir)
+		shutil.copy(job_path+'/'+'beam_'+filename+'.fits',out_dir)
                 if master_sync:
                    print 'Copying files to master directory'
-                   shutil.copy(UVFITS_Scratch+'/'+filename+'.fits',master_sync_dir)
-                   shutil.copy(UVFITS_Scratch+'/'+'beam_'+filename+'.fits',master_sync_dir)
+                   shutil.copy(job_path+'/'+filename+'.fits',master_sync_dir)
+                   shutil.copy(job_path+'/'+'beam_'+filename+'.fits',master_sync_dir)
                    print 'Syncing files with Sydney server'
                    os.system('/home/mebell/SIP/sync.go')
                 
@@ -294,11 +307,11 @@ def autocal(vis):
     '''
     Function to automatically calibrate the data. This function will use setjy or you can define a cl file to calibrate off
     '''
-    params  = read_config()
+    params = read_parset(parset_file)
     refant  = params['refant']
     bsolint = params['bsolint']
     cal_uvrange = params['cal_uvrange']
-    cal_loc = params['cal_loc']
+    cal_loc = locs['cal_loc']
     cal_method = params['cal_method']
     minsnr  = params['minsnr']  
     calflux = params['calflux']
@@ -329,7 +342,6 @@ def autocal(vis):
             print 'Using copy solutions method (function:autocal)'
             applycal(vis=vis,selectdata=False,gaintable=cal_loc)
                         
-
 ######## Funtions for setting image sizes #########
 
 def getBaselineLengths(msFile='', sort=True):
@@ -366,7 +378,7 @@ def getCell_Image_size(msFile):
 ################ WSClean ###################
 
 def WSClean(obs_id):
-        params  = read_config()
+        params  = read_parset(parset_file)
         wniter = params['wniter']
         wsize = params['wsize']
         wscale = params['wscale']
@@ -374,46 +386,84 @@ def WSClean(obs_id):
         wbriggs = params['wbriggs']
         dotwoimages = params['dotwoimages']
         wbriggs2 = params['wbriggs2']
-        name = str(obs_id)+'_briggs_'+str(wbriggs)
+        #name = str(obs_id)+'_briggs_'+str(wbriggs)
         print 'Running WSClean'
-        print wbriggs
-        os.system('/short/ek6/MWA_Code/anoko/mwa-reduce/build/wsclean -pol xx,xy,yx,yy -mgain 0.85 -weight briggs '+str(wbriggs)+' -absmem 57 -name '+name+' -size '+str(wsize)+' '+str(wsize)+'  -scale '+str(wscale)+' -niter '+str(wniter)+' -threshold '+str(wthreshold)+' '+str(obs_id)+'.ms')
-        os.system('/short/ek6/MWA_Code/anoko/mwa-reduce/build/beam -proto '+name+'-XX-image.fits -ms '+str(obs_id)+'.ms')
-        os.system('/short/ek6/MWA_Code/anoko/mwa-reduce/build/pbcorrect '+name+'-XX-image.fits '+name+'-XY-image.fits '+name+'-XYi-image.fits '+name+'-YY-image.fits beam-xxr.fits beam-xxi.fits beam-xyr.fits beam-xyi.fits beam-yxr.fits beam-yxi.fits beam-yyr.fits beam-yyi.fits '+name+'-image-i.fits  '+name+'-image-q.fits '+name+'-image-u.fits '+name+'-image-v.fits')
+        wbriggs = float(wbriggs) 
+        wbriggs2 = float(wbriggs2)
+        if wbriggs < 0:
+               wbriggs = str(wbriggs)
+               briggs_name = wbriggs.split('-')[1]
+               name = obs_id+'_W_bm'+str(briggs_name)
+        else:
+               name = obs_id+'_W_bp'+str(wbriggs)
+        locs = read_parset(loc_parset_file)
+        anoko_build = locs['anoko_build']
+        os.system(anoko_build+'/wsclean -joinpolarizations -pol xx,xy,yx,yy -mgain 0.95 -weight briggs '+str(wbriggs)+' -absmem 57 -name '+name+' -size '+str(wsize)+' '+str(wsize)+'  -scale '+str(wscale)+' -niter '+str(wniter)+' -threshold '+str(wthreshold)+' '+str(obs_id)+'.ms')
+        os.system(anoko_build+'/beam -proto '+name+'-XX-image.fits -ms '+str(obs_id)+'.ms')
+        ######### Make the full images 
+        os.system(anoko_build+'/pbcorrect '+name+' image.fits beam stokes')
+        os.system('mv stokes-I.fits '+name+'_I.fits')
+        os.system('mv stokes-Q.fits '+name+'_Q.fits')
+        os.system('mv stokes-U.fits '+name+'_U.fits')
+        os.system('mv stokes-V.fits '+name+'_V.fits')
+        ######## Rename the XX and YY files 
+        old_name_X = name+'-XX-image.fits'
+        old_name_Y = name+'-YY-image.fits'
+        new_name_X = old_name_X.replace('-XX-image.fits','_XX.fits')
+        new_name_Y = old_name_Y.replace('-YY-image.fits','_YY.fits')
+        os.system('mv '+old_name_X+' '+new_name_X)
+        os.system('mv '+old_name_Y+' '+new_name_Y)
+        ################################
         if dotwoimages: # Repeat the imaging with different briggs weighting
-           name = str(obs_id)+'_briggs_'+str(wbriggs2)
-           print wbriggs2
-           os.system('/short/ek6/MWA_Code/anoko/mwa-reduce/build/wsclean -pol xx,xy,yx,yy -mgain 0.85 -weight briggs '+str(wbriggs2)+' -absmem 57 -name '+name+' -size '+str(wsize)+' '+str(wsize)+'  -scale '+str(wscale)+' -niter '+str(wniter)+' -threshold '+str(wthreshold)+' '+str(obs_id)+'.ms')
-           os.system('/short/ek6/MWA_Code/anoko/mwa-reduce/build/beam -proto '+name+'-XX-image.fits -ms '+str(obs_id)+'.ms')
-           os.system('/short/ek6/MWA_Code/anoko/mwa-reduce/build/pbcorrect '+name+'-XX-image.fits '+name+'-XY-image.fits '+name+'-XYi-image.fits '+name+'-YY-image.fits beam-xxr.fits beam-xxi.fits beam-xyr.fits beam-xyi.fits beam-yxr.fits beam-yxi.fits beam-yyr.fits beam-yyi.fits '+name+'-image-i.fits  '+name+'-image-q.fits '+name+'-image-u.fits '+name+'-image-v.fits')  
+           if wbriggs2 < 0:
+               wbriggs = str(wbriggs)
+               briggs_name = wbriggs.split('-')[1]
+               name = obs_id+'_W_bm'+str(wbriggs2)
+           else:
+               name = obs_id+'_W_bp'+str(wbriggs2)
+           os.system(anoko_build+'/wsclean -joinpolarizations -pol xx,xy,yx,yy -mgain 0.95 -weight briggs '+str(wbriggs2)+' -absmem 57 -name '+name+' -size '+str(wsize)+' '+str(wsize)+'  -scale '+str(wscale)+' -niter '+str(wniter)+' -threshold '+str(wthreshold)+' '+str(obs_id)+'.ms')
+           os.system(anoko_build+'/beam -proto '+name+'-XX-image.fits -ms '+str(obs_id)+'.ms')
+           ######### Make the full images 
+           os.system(anoko_build+'/pbcorrect '+name+' image.fits beam stokes')
+           os.system('mv stokes-I.fits '+name+'_I.fits')
+           os.system('mv stokes-Q.fits '+name+'_Q.fits')
+           os.system('mv stokes-U.fits '+name+'_U.fits')
+           os.system('mv stokes-V.fits '+name+'_V.fits')
+           ######## Rename the XX and YY files 
+           old_name_X = name+'-XX-image.fits'
+           old_name_Y = name+'-YY-image.fits'
+           new_name_X = old_name_X.replace('-XX-image.fits','_XX.fits')
+           new_name_Y = old_name_Y.replace('-YY-image.fits','_YY.fits')
+           os.system('mv '+old_name_X+' '+new_name_X)
+           os.system('mv '+old_name_Y+' '+new_name_Y)
 
 ############ Run the code ##################
-
 print '---------------------------------'
 print 'MWA 128T Standard Imaging Pipeline'
 print '---------------------------------'
 print 'Currently in dir '+os.getcwd()
 
 obspath = sys.argv[3]
-params = read_config()
-out_dir = params['results_dir']
+params = read_parset(parset_file)
+locs = read_parset(loc_parset_file)
+out_dir = locs['results_dir']
 print 'Output directory is '+out_dir
 job_path = os.path.dirname(obspath)
-UVFITS_Scratch = job_path
+#job_path = job_path
 os.chdir(job_path)
 print "Job path = " +job_path
 print 'Currently in dir '+os.getcwd()
 print 'Processing '+obspath
-os.system('rm -rf '+UVFITS_Scratch+'/*.bcal')
-os.system('rm -rf '+UVFITS_Scratch+'/*.residual')
-os.system('rm -rf '+UVFITS_Scratch+'/*.psf')
-os.system('rm -rf '+UVFITS_Scratch+'/*.model')
-os.system('rm -rf '+UVFITS_Scratch+'/*.flux')
-os.system('rm -rf '+UVFITS_Scratch+'/*.last')
-os.system('rm -rf '+UVFITS_Scratch+'/*.fits')
-os.system('rm -rf '+UVFITS_Scratch+'/*.log')
-os.system('rm -rf '+UVFITS_Scratch+'/*.image')
-os.system('rm -rf '+UVFITS_Scratch+'/*.beam')
+os.system('rm -rf '+job_path+'/*.bcal')
+os.system('rm -rf '+job_path+'/*.residual')
+os.system('rm -rf '+job_path+'/*.psf')
+os.system('rm -rf '+job_path+'/*.model')
+os.system('rm -rf '+job_path+'/*.flux')
+os.system('rm -rf '+job_path+'/*.last')
+os.system('rm -rf '+job_path+'/*.fits')
+os.system('rm -rf '+job_path+'/*.log')
+os.system('rm -rf '+job_path+'/*.image')
+os.system('rm -rf '+job_path+'/*.beam')
 dopbcor = params['dopbcor']  
 dormsfind = params['dormsfind']  
 dosub = params['dosub']
@@ -422,6 +472,4 @@ expedition = params['expedition']
 autoreduce(fitsfile=obspath, expedition=expedition, dosub=dosub, doimage=doimage, dopbcor=dopbcor, out_dir=out_dir)
 
 ############################################
-
-
 

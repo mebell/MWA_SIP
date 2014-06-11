@@ -1,0 +1,892 @@
+
+=========================================
+The start-up time of CASA may vary
+depending on whether the shared libraries
+are cached or not.
+=========================================
+
+CASA Version 4.2.0 (r26465)
+  Compiled on: Tue 2013/09/10 00:36:47 UTC
+['/short/ek6/CASA/casapy-stable-42.0.26465-001-64b/lib64/python2.6', '/short/ek6/MWA_Code/MWA_Tools/casatasks', '/short/ek6/CASA/casapy-stable-42.0.26465-001-64b/lib/python2.6/site-packages/setuptools-0.6c11-py2.6.egg', '/short/ek6/CASA/casapy-stable-42.0.26465-001-64b/lib/python2.6/site-packages/pip-1.1-py2.6.egg', '/short/ek6/CASA/casapy-stable-42.0.26465-001-64b/lib64/python2.6', '/short/ek6/CASA/casapy-stable-42.0.26465-001-64b/lib64/python2.6/heuristics', '/short/ek6/CASA/casapy-stable-42.0.26465-001-64b/lib64/python2.6/site-packages', '/short/ek6/MWA_Code/lib/python2.7/site-packages', '/short/ek6/CASA/casapy-stable-42.0.26465-001-64b/lib/python26.zip', '/short/ek6/CASA/casapy-stable-42.0.26465-001-64b/lib/python2.6', '/short/ek6/CASA/casapy-stable-42.0.26465-001-64b/lib/python2.6/plat-linux2', '/short/ek6/CASA/casapy-stable-42.0.26465-001-64b/lib/python2.6/lib-tk', '/short/ek6/CASA/casapy-stable-42.0.26465-001-64b/lib/python2.6/lib-old', '/short/ek6/CASA/casapy-stable-42.0.26465-001-64b/lib/python2.6/lib-dynload', '/short/ek6/CASA/casapy-stable-42.0.26465-001-64b/lib64/python2.6/site-packages/IPython/Extensions', '/short/ek6/CASA/casapy-stable-42.0.26465-001-64b/include', '/short/ek6/CASA/casapy-stable-42.0.26465-001-64b/lib', '/lib', '/usr/lib', '/short/ek6/CASA/casapy-stable-42.0.26465-001-64b/lib64', '/lib64', '/usr/lib64', '/apps/python/2.7.5/lib']
+___________________________________________________________________
+    For help use the following commands:
+    tasklist               - Task list organized by category
+    taskhelp               - One line summary of available tasks
+    help taskname          - Full help for task
+    toolhelp               - One line summary of available tools
+    help par.parametername - Full help for parameter name
+___________________________________________________________________
+will execute script /home/562/meb562/MWA_SIP/SIP_128T_parallel_phase_2.py
+Activating auto-logging. Current session state plus future input saved.
+Filename       : ipython-20140611-025523.log
+Mode           : backup
+Output logging : False
+Raw input log  : False
+Timestamping   : False
+State          : active
+*** Loading ATNF ASAP Package...
+*** ... ASAP (4.2.0a rev#26106) import complete ***
+---------------------------------
+MWA 128T Standard Imaging Pipeline
+---------------------------------
+Currently in dir /short/ek6/meb562/tmp_data/1077909776
+Reading parameter set file
+Reading parameter set file
+Output directory is /short/ek6/meb562/SIP_results/MWA_SIP_out
+Job path = /short/ek6/meb562/tmp_data/1077909776
+Currently in dir /short/ek6/meb562/tmp_data/1077909776
+Processing /short/ek6/meb562/tmp_data/1077909776/1077909776.ms
+Reading parameter set file
+Starting autoreduce (function:autoreduce)
+Splitting out baslines with range:
+>0.03klambda
+Running Flagging
+Reading parameter set file
+Calibrating with settings: ref antenna = Tile012 , bsolint = inf, uvrange = >0.03klambda, minsnr = 2.0 (funtion:autocal)
+Using copy solutions method (function:autocal)
+Calibration finished (function:autoreduce)
+Reading parameter set file
+Imaging full bandwidth image with settings: imsize = [3072, 3072], cell = 0.75arcmin, niter = 20000, clean threshold = 0.03Jy, wprojplanes = 1, Stokes= XX
+Robust = -1.0
+-----------------------
+RA (rad) 3.641116
+DEC (rad) -0.464852
+LON (rad) 2.036293
+LAT (rad) -0.466055
+LST (from JD and LON) (rad) 3.644854
+JD 2456720.307431
+hour is 0.003738
+-----------------------
+Imaging full bandwidth image with settings: imsize = [3072, 3072], cell = 0.75arcmin, niter = 20000, clean threshold = 0.03Jy, wprojplanes = 1, Stokes= YY
+Robust = -1.0
+
+ ** This software package is released under the GPL version 3. **
+ ** Author: André Offringa (offringa@gmail.com).               **
+
+First measurement set has corrected data: tasks will be applied on the corrected data column.
+Reordering 835632 selected rows into 1 x 4 parts.
+Reordering: 0%....10%....20%....30%....40%....50%....60%....70%....80%....90%....100%
+Initializing model visibilities: 0%....10%....20%....30%....40%....50%....60%....70%....80%....90%....100%
+Detected 63 GB of system memory, usage limited to 57 GB (frac=100%, limit=57GB)
+Opening reordered part 0 for 1077909776.ms
+Precalculating weights for Briggs'(-1) weighting... DONE
+ == Constructing PSF ==
+Selected channels: 0-192
+Determining min and max w & beam size... DONE (w=[4.57167e-06 -- 14.0513] lambdas)
+The theoretically suggested number of w-layers (11) is less than the number of availables
+cores (16). Changing suggested number of w-layers to 16.
+Suggested number of w-layers: 16
+Will process 16/16 w-layers per pass.
+Visibility count per layer: 39290099 51673872 31688219 15851986 9730297 5363004 2731024 1738835 1246796 758385 287407 59867 13807 5263 2143 340 
+Gridding pass 0... 
+Rows that were required: 835632/835632
+Fourier transforms...
+Total rows read: 835632 (overhead: 0%)
+Storing 1077909776_W_bm1.0-psf-XX-tmp.fits
+Beam size is 2.1158 arcmin.
+Writing psf image... DONE
+ == Constructing image ==
+Selected channels: 0-192
+Determining min and max w & beam size... DONE (w=[4.57167e-06 -- 14.0513] lambdas)
+The theoretically suggested number of w-layers (11) is less than the number of availables
+cores (16). Changing suggested number of w-layers to 16.
+Will process 16/16 w-layers per pass.
+Gridding pass 0... Fourier transforms...
+Storing 1077909776_W_bm1.0-residual-XX-tmp.fits
+Writing gridding correction image... DONE
+Storing 1077909776_W_bm1.0-model-XX-tmp.fits
+Writing dirty image... DONE
+Opening reordered part 0 for 1077909776.ms
+ == Constructing image ==
+Selected channels: 0-192
+Determining min and max w & beam size... DONE (w=[4.57167e-06 -- 14.0513] lambdas)
+Will process 22/22 w-layers per pass.
+Gridding pass 0... Fourier transforms...
+Storing 1077909776_W_bm1.0-residual-XY-tmp.fits
+Storing 1077909776_W_bm1.0-residual-XYi-tmp.fits
+Storing 1077909776_W_bm1.0-model-XY-tmp.fits
+Storing 1077909776_W_bm1.0-model-XYi-tmp.fits
+Writing dirty image... DONE
+Opening reordered part 0 for 1077909776.ms
+ == Constructing image ==
+Selected channels: 0-192
+Determining min and max w & beam size... DONE (w=[4.57167e-06 -- 14.0513] lambdas)
+Will process 22/22 w-layers per pass.
+Gridding pass 0... Fourier transforms...
+Adding XY and YX together...
+Loading 1077909776_W_bm1.0-residual-XY-tmp.fits
+Storing 1077909776_W_bm1.0-residual-XY-tmp.fits
+Adding XY and YX together...
+Loading 1077909776_W_bm1.0-residual-XYi-tmp.fits
+Storing 1077909776_W_bm1.0-residual-XYi-tmp.fits
+Writing dirty image... DONE
+Opening reordered part 0 for 1077909776.ms
+ == Constructing image ==
+Selected channels: 0-192
+Determining min and max w & beam size... DONE (w=[4.57167e-06 -- 14.0513] lambdas)
+The theoretically suggested number of w-layers (11) is less than the number of availables
+cores (16). Changing suggested number of w-layers to 16.
+Will process 16/16 w-layers per pass.
+Gridding pass 0... Fourier transforms...
+Storing 1077909776_W_bm1.0-residual-YY-tmp.fits
+Storing 1077909776_W_bm1.0-model-YY-tmp.fits
+Writing dirty image... DONE
+ == Cleaning (1) ==
+Loading 1077909776_W_bm1.0-psf-XX-tmp.fits
+Loading 1077909776_W_bm1.0-model-XX-tmp.fits
+Loading 1077909776_W_bm1.0-model-XY-tmp.fits
+Loading 1077909776_W_bm1.0-model-XYi-tmp.fits
+Loading 1077909776_W_bm1.0-model-YY-tmp.fits
+Loading 1077909776_W_bm1.0-residual-XX-tmp.fits
+Loading 1077909776_W_bm1.0-residual-XY-tmp.fits
+Loading 1077909776_W_bm1.0-residual-XYi-tmp.fits
+Loading 1077909776_W_bm1.0-residual-YY-tmp.fits
+Initial peak: 46.056 Jy at 1956,236
+Next major iteration at: 2.3028
+Iteration 0: 46.056 Jy at 1956,236
+Iteration 1: 41.4458 Jy at 1956,236
+Iteration 2: 37.297 Jy at 1956,236
+Iteration 3: 33.5636 Jy at 1956,236
+Iteration 4: 31.0804 Jy at 1962,229
+Iteration 5: 30.2493 Jy at 1956,236
+Iteration 6: 28.0135 Jy at 1962,229
+Iteration 7: 27.2623 Jy at 1956,236
+Iteration 8: 25.2492 Jy at 1962,229
+Iteration 9: 24.5703 Jy at 1956,236
+Iteration 10: 22.9463 Jy at 1962,230
+Iteration 20: 16.2992 Jy at 1963,228
+Iteration 30: 13.6377 Jy at 1956,234
+Iteration 40: 11.8125 Jy at 1955,235
+Iteration 50: 10.0719 Jy at 1957,234
+Iteration 60: 8.94746 Jy at 1963,228
+Iteration 70: 8.10408 Jy at 1954,236
+Iteration 80: 7.41326 Jy at 2325,1852
+Iteration 90: 6.78814 Jy at 1963,227
+Iteration 100: 6.32386 Jy at 1955,1578
+Iteration 200: 3.83091 Jy at 1963,231
+Iteration 300: 2.97045 Jy at 1404,1396
+Iteration 400: 2.4753 Jy at 1491,2235
+Stopped on peak 2.30068
+Storing 1077909776_W_bm1.0-model-XX-tmp.fits
+Storing 1077909776_W_bm1.0-model-XY-tmp.fits
+Storing 1077909776_W_bm1.0-model-XYi-tmp.fits
+Storing 1077909776_W_bm1.0-model-YY-tmp.fits
+Storing 1077909776_W_bm1.0-residual-XX-tmp.fits
+Storing 1077909776_W_bm1.0-residual-XY-tmp.fits
+Storing 1077909776_W_bm1.0-residual-XYi-tmp.fits
+Storing 1077909776_W_bm1.0-residual-YY-tmp.fits
+Writing first iteration image... DONE
+Writing first iteration image... DONE
+Writing first iteration image... DONE
+Writing first iteration image... DONE
+Opening reordered part 0 for 1077909776.ms
+Precalculating weights for Briggs'(-1) weighting... DONE
+ == Converting model image to visibilities ==
+Loading 1077909776_W_bm1.0-model-XX-tmp.fits
+Selected channels: 0-192
+Determining min and max w & beam size... DONE (w=[4.57167e-06 -- 14.0513] lambdas)
+The theoretically suggested number of w-layers (11) is less than the number of availables
+cores (16). Changing suggested number of w-layers to 16.
+Will process 16/16 w-layers per pass.
+Fourier transforms... Prediction pass 0...
+Rows that were required: 835632/0
+Total rows written: 835632 (overhead: inf%)
+ == Constructing image ==
+Selected channels: 0-192
+Determining min and max w & beam size... DONE (w=[4.57167e-06 -- 14.0513] lambdas)
+Will process 16/16 w-layers per pass.
+Gridding pass 0... Fourier transforms...
+Storing 1077909776_W_bm1.0-residual-XX-tmp.fits
+Opening reordered part 0 for 1077909776.ms
+ == Converting model image to visibilities ==
+Loading 1077909776_W_bm1.0-model-XY-tmp.fits
+Loading 1077909776_W_bm1.0-model-XYi-tmp.fits
+Selected channels: 0-192
+Determining min and max w & beam size... DONE (w=[4.57167e-06 -- 14.0513] lambdas)
+Will process 22/22 w-layers per pass.
+Fourier transforms... Prediction pass 0...
+Rows that were required: 835632/0
+Total rows written: 835632 (overhead: inf%)
+ == Constructing image ==
+Selected channels: 0-192
+Determining min and max w & beam size... DONE (w=[4.57167e-06 -- 14.0513] lambdas)
+Will process 22/22 w-layers per pass.
+Gridding pass 0... Fourier transforms...
+Storing 1077909776_W_bm1.0-residual-XY-tmp.fits
+Storing 1077909776_W_bm1.0-residual-XYi-tmp.fits
+Opening reordered part 0 for 1077909776.ms
+ == Converting model image to visibilities ==
+Loading 1077909776_W_bm1.0-model-XY-tmp.fits
+Loading 1077909776_W_bm1.0-model-XYi-tmp.fits
+Selected channels: 0-192
+Determining min and max w & beam size... DONE (w=[4.57167e-06 -- 14.0513] lambdas)
+Will process 22/22 w-layers per pass.
+Fourier transforms... Prediction pass 0...
+Rows that were required: 835632/0
+Total rows written: 835632 (overhead: inf%)
+ == Constructing image ==
+Selected channels: 0-192
+Determining min and max w & beam size... DONE (w=[4.57167e-06 -- 14.0513] lambdas)
+Will process 22/22 w-layers per pass.
+Gridding pass 0... Fourier transforms...
+Adding XY and YX together...
+Loading 1077909776_W_bm1.0-residual-XY-tmp.fits
+Storing 1077909776_W_bm1.0-residual-XY-tmp.fits
+Adding XY and YX together...
+Loading 1077909776_W_bm1.0-residual-XYi-tmp.fits
+Storing 1077909776_W_bm1.0-residual-XYi-tmp.fits
+Opening reordered part 0 for 1077909776.ms
+ == Converting model image to visibilities ==
+Loading 1077909776_W_bm1.0-model-YY-tmp.fits
+Selected channels: 0-192
+Determining min and max w & beam size... DONE (w=[4.57167e-06 -- 14.0513] lambdas)
+The theoretically suggested number of w-layers (11) is less than the number of availables
+cores (16). Changing suggested number of w-layers to 16.
+Will process 16/16 w-layers per pass.
+Fourier transforms... Prediction pass 0...
+Rows that were required: 835632/0
+Total rows written: 835632 (overhead: inf%)
+ == Constructing image ==
+Selected channels: 0-192
+Determining min and max w & beam size... DONE (w=[4.57167e-06 -- 14.0513] lambdas)
+Will process 16/16 w-layers per pass.
+Gridding pass 0... Fourier transforms...
+Storing 1077909776_W_bm1.0-residual-YY-tmp.fits
+ == Cleaning (2) ==
+Loading 1077909776_W_bm1.0-psf-XX-tmp.fits
+Loading 1077909776_W_bm1.0-model-XX-tmp.fits
+Loading 1077909776_W_bm1.0-model-XY-tmp.fits
+Loading 1077909776_W_bm1.0-model-XYi-tmp.fits
+Loading 1077909776_W_bm1.0-model-YY-tmp.fits
+Loading 1077909776_W_bm1.0-residual-XX-tmp.fits
+Loading 1077909776_W_bm1.0-residual-XY-tmp.fits
+Loading 1077909776_W_bm1.0-residual-XYi-tmp.fits
+Loading 1077909776_W_bm1.0-residual-YY-tmp.fits
+Initial peak: 2.63259 Jy at 1955,234
+Next major iteration at: 0.13163
+Iteration 500: 2.1756 Jy at 1294,1258
+Iteration 600: 1.92596 Jy at 1460,1921
+Iteration 700: 1.73092 Jy at 1072,585
+Iteration 800: 1.58716 Jy at 937,1431
+Iteration 900: 1.45933 Jy at 1857,2204
+Iteration 1000: 1.37008 Jy at 1637,1630
+Iteration 2000: 0.878443 Jy at 1486,1635
+Iteration 3000: 0.701376 Jy at 1830,945
+Iteration 4000: 0.594576 Jy at 1154,1335
+Iteration 5000: 0.521957 Jy at 1987,238
+Iteration 6000: 0.468478 Jy at 1975,265
+Iteration 7000: 0.426649 Jy at 1060,907
+Iteration 8000: 0.393205 Jy at 1260,1169
+Iteration 9000: 0.366601 Jy at 1898,1746
+Iteration 10000: 0.343736 Jy at 1090,1157
+Iteration 11000: 0.324444 Jy at 1970,831
+Iteration 12000: 0.308319 Jy at 2532,1645
+Iteration 13000: 0.293031 Jy at 2657,820
+Iteration 14000: 0.280292 Jy at 1812,931
+Iteration 15000: 0.268859 Jy at 1712,505
+Iteration 16000: 0.258927 Jy at 1397,2725
+Iteration 17000: 0.250108 Jy at 1923,270
+Iteration 18000: 0.24127 Jy at 2710,2363
+Iteration 19000: 0.233739 Jy at 1770,1012
+Stopped on peak 0.226775
+Storing 1077909776_W_bm1.0-model-XX-tmp.fits
+Storing 1077909776_W_bm1.0-model-XY-tmp.fits
+Storing 1077909776_W_bm1.0-model-XYi-tmp.fits
+Storing 1077909776_W_bm1.0-model-YY-tmp.fits
+Storing 1077909776_W_bm1.0-residual-XX-tmp.fits
+Storing 1077909776_W_bm1.0-residual-XY-tmp.fits
+Storing 1077909776_W_bm1.0-residual-XYi-tmp.fits
+Storing 1077909776_W_bm1.0-residual-YY-tmp.fits
+Writing model image... DONE
+Writing model image... DONE
+Writing model image... DONE
+Writing model image... DONE
+Opening reordered part 0 for 1077909776.ms
+Precalculating weights for Briggs'(-1) weighting... DONE
+ == Converting model image to visibilities ==
+Loading 1077909776_W_bm1.0-model-XX-tmp.fits
+Selected channels: 0-192
+Determining min and max w & beam size... DONE (w=[4.57167e-06 -- 14.0513] lambdas)
+The theoretically suggested number of w-layers (11) is less than the number of availables
+cores (16). Changing suggested number of w-layers to 16.
+Will process 16/16 w-layers per pass.
+Fourier transforms... Prediction pass 0...
+Rows that were required: 835632/0
+Total rows written: 835632 (overhead: inf%)
+ == Constructing image ==
+Selected channels: 0-192
+Determining min and max w & beam size... DONE (w=[4.57167e-06 -- 14.0513] lambdas)
+Will process 16/16 w-layers per pass.
+Gridding pass 0... Fourier transforms...
+Storing 1077909776_W_bm1.0-residual-XX-tmp.fits
+Loading 1077909776_W_bm1.0-residual-XX-tmp.fits
+Writing residual image... DONE
+Opening reordered part 0 for 1077909776.ms
+ == Converting model image to visibilities ==
+Loading 1077909776_W_bm1.0-model-XY-tmp.fits
+Loading 1077909776_W_bm1.0-model-XYi-tmp.fits
+Selected channels: 0-192
+Determining min and max w & beam size... DONE (w=[4.57167e-06 -- 14.0513] lambdas)
+Will process 22/22 w-layers per pass.
+Fourier transforms... Prediction pass 0...
+Rows that were required: 835632/0
+Total rows written: 835632 (overhead: inf%)
+ == Constructing image ==
+Selected channels: 0-192
+Determining min and max w & beam size... DONE (w=[4.57167e-06 -- 14.0513] lambdas)
+Will process 22/22 w-layers per pass.
+Gridding pass 0... Fourier transforms...
+Storing 1077909776_W_bm1.0-residual-XY-tmp.fits
+Storing 1077909776_W_bm1.0-residual-XYi-tmp.fits
+Loading 1077909776_W_bm1.0-residual-XY-tmp.fits
+Writing residual image... DONE
+Opening reordered part 0 for 1077909776.ms
+ == Converting model image to visibilities ==
+Loading 1077909776_W_bm1.0-model-XY-tmp.fits
+Loading 1077909776_W_bm1.0-model-XYi-tmp.fits
+Selected channels: 0-192
+Determining min and max w & beam size... DONE (w=[4.57167e-06 -- 14.0513] lambdas)
+Will process 22/22 w-layers per pass.
+Fourier transforms... Prediction pass 0...
+Rows that were required: 835632/0
+Total rows written: 835632 (overhead: inf%)
+ == Constructing image ==
+Selected channels: 0-192
+Determining min and max w & beam size... DONE (w=[4.57167e-06 -- 14.0513] lambdas)
+Will process 22/22 w-layers per pass.
+Gridding pass 0... Fourier transforms...
+Adding XY and YX together...
+Loading 1077909776_W_bm1.0-residual-XY-tmp.fits
+Storing 1077909776_W_bm1.0-residual-XY-tmp.fits
+Adding XY and YX together...
+Loading 1077909776_W_bm1.0-residual-XYi-tmp.fits
+Storing 1077909776_W_bm1.0-residual-XYi-tmp.fits
+Opening reordered part 0 for 1077909776.ms
+ == Converting model image to visibilities ==
+Loading 1077909776_W_bm1.0-model-YY-tmp.fits
+Selected channels: 0-192
+Determining min and max w & beam size... DONE (w=[4.57167e-06 -- 14.0513] lambdas)
+The theoretically suggested number of w-layers (11) is less than the number of availables
+cores (16). Changing suggested number of w-layers to 16.
+Will process 16/16 w-layers per pass.
+Fourier transforms... Prediction pass 0...
+Rows that were required: 835632/0
+Total rows written: 835632 (overhead: inf%)
+ == Constructing image ==
+Selected channels: 0-192
+Determining min and max w & beam size... DONE (w=[4.57167e-06 -- 14.0513] lambdas)
+Will process 16/16 w-layers per pass.
+Gridding pass 0... Fourier transforms...
+Storing 1077909776_W_bm1.0-residual-YY-tmp.fits
+Loading 1077909776_W_bm1.0-residual-YY-tmp.fits
+Writing residual image... DONE
+3 major iterations were performed.
+Loading 1077909776_W_bm1.0-model-XX-tmp.fits
+Loading 1077909776_W_bm1.0-residual-XX-tmp.fits
+Rendering 6089 sources to restored image... DONE
+Writing restored image... DONE
+Loading 1077909776_W_bm1.0-model-XY-tmp.fits
+Loading 1077909776_W_bm1.0-residual-XY-tmp.fits
+Rendering 6089 sources to restored image... DONE
+Writing restored image... DONE
+Loading 1077909776_W_bm1.0-model-XYi-tmp.fits
+Loading 1077909776_W_bm1.0-residual-XYi-tmp.fits
+Rendering 6089 sources to restored image... DONE
+Writing restored image... DONE
+Loading 1077909776_W_bm1.0-model-YY-tmp.fits
+Loading 1077909776_W_bm1.0-residual-YY-tmp.fits
+Rendering 6089 sources to restored image... DONE
+Writing restored image... DONE
+Image buf alloc stats:
+         max alloc'd images = 35 real + 54 complex
+       max allocated chunks = 72
+      current allocated mem = 10.9 GB 
+Inversion: 00:04:17.958642, prediction: 00:07:03.576561, cleaning: 00:10:35.128572
+Adding model data column... DONE
+Writing changed model back to 1077909776.ms:
+ 0%....10%....20%....30%....40%....50%....60%....70%....80%....90%....100%
+Cleaning up temporary files...
+Start time = Epoch: 56719::19:22:42.5000, end time = Epoch: 56719::19:24:33.5000
+Using mid time = Epoch: 56719::19:23:38.0000
+Delays: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+Zenith: -151.139 RA, -26.7009 dec, 0 HA.
+Reference dir: -151.379 RA, -26.634 dec.
+Searching mwapy/pb/Jmatrix.fits... /short/ek6/MWA_Code/lib/python2.7/site-packages/mwapy/pb/Jmatrix.fits
+Loading ZA/PH values...
+Loading J lookup matrix for frequency (MHz) :
+  88.32 96 103.68 111.36 119.04 126.72 134.4 142.08 154.88 162.56 170.24 177.92 185.6 193.28 200.96 208.64 216.32 224 231.68 239.36 
+Searching mwapy/pb/ZMatrix.fits... /short/ek6/MWA_Code/lib/python2.7/site-packages/mwapy/pb/ZMatrix.fits
+Loading impedance matrices for freq (MHz): 88.3 96 103.7 111.4 119 126.7 134.4 142.1 154.9 162.6 170.2 177.9 185.6 193.3 201 208.6 216.3 224 231.7 239.4 
+Frequency interpolation of beam is disabled.
+Constructing beam: 0%Selected impedance table for frequency 154.88 MHz
+MWA 154235000Hz X dipole current amplitude
+1.169822991718156 1.150260167376325 1.152684162548384 1.165223352298114 
+1.184073542467023 1.17955149779909 1.17782816693398 1.187633265669656 
+1.187635807292208 1.177824549868132 1.179551887779202 1.184067640023275 
+1.165246745800678 1.152667841750996 1.150252510593329 1.169828195490485 
+MWA 154235000MHz X dipole current phase
+-40.14073158840015 -38.63483403689212 -38.68620196565467 -39.6296496071139 
+-38.91966349867026 -37.51973145127816 -37.70986372452801 -39.06793517779389 
+-39.06809855370851 -37.70999902908459 -37.51979955311175 -38.91976555179978 
+-39.62940040100731 -38.68624711138744 -38.63457729764428 -40.14164334745365 
+Selected impedance table for frequency 154.88 MHz
+MWA 154235000Hz X dipole current amplitude
+1.169822991718156 1.150260167376325 1.152684162548384 1.165223352298114 
+1.184073542467023 1.17955149779909 1.17782816693398 1.187633265669656 
+1.187635807292208 1.177824549868132 1.179551887779202 1.184067640023275 
+1.165246745800678 1.152667841750996 1.150252510593329 1.169828195490485 
+MWA 154235000MHz X dipole current phase
+-40.14073158840015 -38.63483403689212 -38.68620196565467 -39.6296496071139 
+-38.91966349867026 -37.51973145127816 -37.70986372452801 -39.06793517779389 
+-39.06809855370851 -37.70999902908459 -37.51979955311175 -38.91976555179978 
+-39.62940040100731 -38.68624711138744 -38.63457729764428 -40.14164334745365 
+....10%....20%....30%....40%....50%....60%....70%....80%....90%....100%
+
+Writing...
+
+ ** This software package is released under the GPL version 3. **
+ ** Author: André Offringa (offringa@gmail.com).               **
+
+First measurement set has corrected data: tasks will be applied on the corrected data column.
+Reordering 835632 selected rows into 1 x 4 parts.
+Reordering: 0%....10%....20%....30%....40%....50%....60%....70%....80%....90%....100%
+Initializing model visibilities: 0%....10%....20%....30%....40%....50%....60%....70%....80%....90%....100%
+Detected 63 GB of system memory, usage limited to 57 GB (frac=100%, limit=57GB)
+Opening reordered part 0 for 1077909776.ms
+Precalculating weights for Briggs'(1) weighting... DONE
+ == Constructing PSF ==
+Selected channels: 0-192
+Determining min and max w & beam size... DONE (w=[4.57167e-06 -- 14.0513] lambdas)
+The theoretically suggested number of w-layers (11) is less than the number of availables
+cores (16). Changing suggested number of w-layers to 16.
+Suggested number of w-layers: 16
+Will process 16/16 w-layers per pass.
+Visibility count per layer: 39290099 51673872 31688219 15851986 9730297 5363004 2731024 1738835 1246796 758385 287407 59867 13807 5263 2143 340 
+Gridding pass 0... 
+Rows that were required: 835632/835632
+Fourier transforms...
+Total rows read: 835632 (overhead: 0%)
+Storing 1077909776_W_bp1.0-psf-XX-tmp.fits
+Beam size is 2.1158 arcmin.
+Writing psf image... DONE
+ == Constructing image ==
+Selected channels: 0-192
+Determining min and max w & beam size... DONE (w=[4.57167e-06 -- 14.0513] lambdas)
+The theoretically suggested number of w-layers (11) is less than the number of availables
+cores (16). Changing suggested number of w-layers to 16.
+Will process 16/16 w-layers per pass.
+Gridding pass 0... Fourier transforms...
+Storing 1077909776_W_bp1.0-residual-XX-tmp.fits
+Writing gridding correction image... DONE
+Storing 1077909776_W_bp1.0-model-XX-tmp.fits
+Writing dirty image... DONE
+Opening reordered part 0 for 1077909776.ms
+ == Constructing image ==
+Selected channels: 0-192
+Determining min and max w & beam size... DONE (w=[4.57167e-06 -- 14.0513] lambdas)
+Will process 22/22 w-layers per pass.
+Gridding pass 0... Fourier transforms...
+Storing 1077909776_W_bp1.0-residual-XY-tmp.fits
+Storing 1077909776_W_bp1.0-residual-XYi-tmp.fits
+Storing 1077909776_W_bp1.0-model-XY-tmp.fits
+Storing 1077909776_W_bp1.0-model-XYi-tmp.fits
+Writing dirty image... DONE
+Opening reordered part 0 for 1077909776.ms
+ == Constructing image ==
+Selected channels: 0-192
+Determining min and max w & beam size... DONE (w=[4.57167e-06 -- 14.0513] lambdas)
+Will process 22/22 w-layers per pass.
+Gridding pass 0... Fourier transforms...
+Adding XY and YX together...
+Loading 1077909776_W_bp1.0-residual-XY-tmp.fits
+Storing 1077909776_W_bp1.0-residual-XY-tmp.fits
+Adding XY and YX together...
+Loading 1077909776_W_bp1.0-residual-XYi-tmp.fits
+Storing 1077909776_W_bp1.0-residual-XYi-tmp.fits
+Writing dirty image... DONE
+Opening reordered part 0 for 1077909776.ms
+ == Constructing image ==
+Selected channels: 0-192
+Determining min and max w & beam size... DONE (w=[4.57167e-06 -- 14.0513] lambdas)
+The theoretically suggested number of w-layers (11) is less than the number of availables
+cores (16). Changing suggested number of w-layers to 16.
+Will process 16/16 w-layers per pass.
+Gridding pass 0... Fourier transforms...
+Storing 1077909776_W_bp1.0-residual-YY-tmp.fits
+Storing 1077909776_W_bp1.0-model-YY-tmp.fits
+Writing dirty image... DONE
+ == Cleaning (1) ==
+Loading 1077909776_W_bp1.0-psf-XX-tmp.fits
+Loading 1077909776_W_bp1.0-model-XX-tmp.fits
+Loading 1077909776_W_bp1.0-model-XY-tmp.fits
+Loading 1077909776_W_bp1.0-model-XYi-tmp.fits
+Loading 1077909776_W_bp1.0-model-YY-tmp.fits
+Loading 1077909776_W_bp1.0-residual-XX-tmp.fits
+Loading 1077909776_W_bp1.0-residual-XY-tmp.fits
+Loading 1077909776_W_bp1.0-residual-XYi-tmp.fits
+Loading 1077909776_W_bp1.0-residual-YY-tmp.fits
+Initial peak: 69.3499 Jy at 1956,236
+Next major iteration at: 3.4675
+Iteration 0: 69.3499 Jy at 1956,236
+Iteration 1: 62.4145 Jy at 1956,236
+Iteration 2: 56.1727 Jy at 1956,236
+Iteration 3: 50.924 Jy at 1962,229
+Iteration 4: 50.5893 Jy at 1956,236
+Iteration 5: 46.0282 Jy at 1962,230
+Iteration 6: 45.4655 Jy at 1956,236
+Iteration 7: 41.77 Jy at 1962,229
+Iteration 8: 40.9467 Jy at 1956,236
+Iteration 9: 38.0305 Jy at 1961,230
+Iteration 10: 36.7797 Jy at 1956,235
+Iteration 20: 23.7838 Jy at 1958,233
+Iteration 30: 18.2739 Jy at 1959,232
+Iteration 40: 14.2403 Jy at 1956,238
+Iteration 50: 11.9279 Jy at 1963,227
+Iteration 60: 10.2025 Jy at 1954,237
+Iteration 70: 8.61888 Jy at 1954,237
+Iteration 80: 7.83428 Jy at 2324,1851
+Iteration 90: 7.0628 Jy at 1955,1578
+Iteration 100: 6.4667 Jy at 2324,1851
+Iteration 200: 3.97144 Jy at 1189,1226
+Stopped on peak 3.46613
+Storing 1077909776_W_bp1.0-model-XX-tmp.fits
+Storing 1077909776_W_bp1.0-model-XY-tmp.fits
+Storing 1077909776_W_bp1.0-model-XYi-tmp.fits
+Storing 1077909776_W_bp1.0-model-YY-tmp.fits
+Storing 1077909776_W_bp1.0-residual-XX-tmp.fits
+Storing 1077909776_W_bp1.0-residual-XY-tmp.fits
+Storing 1077909776_W_bp1.0-residual-XYi-tmp.fits
+Storing 1077909776_W_bp1.0-residual-YY-tmp.fits
+Writing first iteration image... DONE
+Writing first iteration image... DONE
+Writing first iteration image... DONE
+Writing first iteration image... DONE
+Opening reordered part 0 for 1077909776.ms
+Precalculating weights for Briggs'(1) weighting... DONE
+ == Converting model image to visibilities ==
+Loading 1077909776_W_bp1.0-model-XX-tmp.fits
+Selected channels: 0-192
+Determining min and max w & beam size... DONE (w=[4.57167e-06 -- 14.0513] lambdas)
+The theoretically suggested number of w-layers (11) is less than the number of availables
+cores (16). Changing suggested number of w-layers to 16.
+Will process 16/16 w-layers per pass.
+Fourier transforms... Prediction pass 0...
+Rows that were required: 835632/0
+Total rows written: 835632 (overhead: inf%)
+ == Constructing image ==
+Selected channels: 0-192
+Determining min and max w & beam size... DONE (w=[4.57167e-06 -- 14.0513] lambdas)
+Will process 16/16 w-layers per pass.
+Gridding pass 0... Fourier transforms...
+Storing 1077909776_W_bp1.0-residual-XX-tmp.fits
+Opening reordered part 0 for 1077909776.ms
+ == Converting model image to visibilities ==
+Loading 1077909776_W_bp1.0-model-XY-tmp.fits
+Loading 1077909776_W_bp1.0-model-XYi-tmp.fits
+Selected channels: 0-192
+Determining min and max w & beam size... DONE (w=[4.57167e-06 -- 14.0513] lambdas)
+Will process 22/22 w-layers per pass.
+Fourier transforms... Prediction pass 0...
+Rows that were required: 835632/0
+Total rows written: 835632 (overhead: inf%)
+ == Constructing image ==
+Selected channels: 0-192
+Determining min and max w & beam size... DONE (w=[4.57167e-06 -- 14.0513] lambdas)
+Will process 22/22 w-layers per pass.
+Gridding pass 0... Fourier transforms...
+Storing 1077909776_W_bp1.0-residual-XY-tmp.fits
+Storing 1077909776_W_bp1.0-residual-XYi-tmp.fits
+Opening reordered part 0 for 1077909776.ms
+ == Converting model image to visibilities ==
+Loading 1077909776_W_bp1.0-model-XY-tmp.fits
+Loading 1077909776_W_bp1.0-model-XYi-tmp.fits
+Selected channels: 0-192
+Determining min and max w & beam size... DONE (w=[4.57167e-06 -- 14.0513] lambdas)
+Will process 22/22 w-layers per pass.
+Fourier transforms... Prediction pass 0...
+Rows that were required: 835632/0
+Total rows written: 835632 (overhead: inf%)
+ == Constructing image ==
+Selected channels: 0-192
+Determining min and max w & beam size... DONE (w=[4.57167e-06 -- 14.0513] lambdas)
+Will process 22/22 w-layers per pass.
+Gridding pass 0... Fourier transforms...
+Adding XY and YX together...
+Loading 1077909776_W_bp1.0-residual-XY-tmp.fits
+Storing 1077909776_W_bp1.0-residual-XY-tmp.fits
+Adding XY and YX together...
+Loading 1077909776_W_bp1.0-residual-XYi-tmp.fits
+Storing 1077909776_W_bp1.0-residual-XYi-tmp.fits
+Opening reordered part 0 for 1077909776.ms
+ == Converting model image to visibilities ==
+Loading 1077909776_W_bp1.0-model-YY-tmp.fits
+Selected channels: 0-192
+Determining min and max w & beam size... DONE (w=[4.57167e-06 -- 14.0513] lambdas)
+The theoretically suggested number of w-layers (11) is less than the number of availables
+cores (16). Changing suggested number of w-layers to 16.
+Will process 16/16 w-layers per pass.
+Fourier transforms... Prediction pass 0...
+Rows that were required: 835632/0
+Total rows written: 835632 (overhead: inf%)
+ == Constructing image ==
+Selected channels: 0-192
+Determining min and max w & beam size... DONE (w=[4.57167e-06 -- 14.0513] lambdas)
+Will process 16/16 w-layers per pass.
+Gridding pass 0... Fourier transforms...
+Storing 1077909776_W_bp1.0-residual-YY-tmp.fits
+ == Cleaning (2) ==
+Loading 1077909776_W_bp1.0-psf-XX-tmp.fits
+Loading 1077909776_W_bp1.0-model-XX-tmp.fits
+Loading 1077909776_W_bp1.0-model-XY-tmp.fits
+Loading 1077909776_W_bp1.0-model-XYi-tmp.fits
+Loading 1077909776_W_bp1.0-model-YY-tmp.fits
+Loading 1077909776_W_bp1.0-residual-XX-tmp.fits
+Loading 1077909776_W_bp1.0-residual-XY-tmp.fits
+Loading 1077909776_W_bp1.0-residual-XYi-tmp.fits
+Loading 1077909776_W_bp1.0-residual-YY-tmp.fits
+Initial peak: 3.47775 Jy at 1404,784
+Next major iteration at: 0.173888
+Iteration 300: 3.15642 Jy at 1189,1226
+Iteration 400: 2.71058 Jy at 1960,227
+Iteration 500: 2.36488 Jy at 1403,1396
+Iteration 600: 2.12816 Jy at 1059,2095
+Iteration 700: 1.95312 Jy at 1067,1169
+Iteration 800: 1.81002 Jy at 985,2187
+Iteration 900: 1.69522 Jy at 2402,1603
+Iteration 1000: 1.58592 Jy at 1403,1396
+Iteration 2000: 1.05063 Jy at 1661,326
+Iteration 3000: 0.829726 Jy at 1811,935
+Iteration 4000: 0.699408 Jy at 2036,1459
+Iteration 5000: 0.60828 Jy at 1959,236
+Iteration 6000: 0.543179 Jy at 1811,936
+Iteration 7000: 0.491969 Jy at 1913,258
+Iteration 8000: 0.450395 Jy at 1984,281
+Iteration 9000: 0.416982 Jy at 1153,1940
+Iteration 10000: 0.388932 Jy at 2071,1022
+Iteration 11000: 0.3659 Jy at 1985,209
+Iteration 12000: 0.346583 Jy at 2037,1558
+Iteration 13000: 0.32844 Jy at 2668,2599
+Iteration 14000: 0.313738 Jy at 1463,1757
+Iteration 15000: 0.30071 Jy at 1617,2334
+Iteration 16000: 0.289284 Jy at 737,1985
+Iteration 17000: 0.279102 Jy at 689,1498
+Iteration 18000: 0.269447 Jy at 1972,208
+Iteration 19000: 0.261317 Jy at 1978,819
+Stopped on peak 0.253776
+Storing 1077909776_W_bp1.0-model-XX-tmp.fits
+Storing 1077909776_W_bp1.0-model-XY-tmp.fits
+Storing 1077909776_W_bp1.0-model-XYi-tmp.fits
+Storing 1077909776_W_bp1.0-model-YY-tmp.fits
+Storing 1077909776_W_bp1.0-residual-XX-tmp.fits
+Storing 1077909776_W_bp1.0-residual-XY-tmp.fits
+Storing 1077909776_W_bp1.0-residual-XYi-tmp.fits
+Storing 1077909776_W_bp1.0-residual-YY-tmp.fits
+Writing model image... DONE
+Writing model image... DONE
+Writing model image... DONE
+Writing model image... DONE
+Opening reordered part 0 for 1077909776.ms
+Precalculating weights for Briggs'(1) weighting... DONE
+ == Converting model image to visibilities ==
+Loading 1077909776_W_bp1.0-model-XX-tmp.fits
+Selected channels: 0-192
+Determining min and max w & beam size... DONE (w=[4.57167e-06 -- 14.0513] lambdas)
+The theoretically suggested number of w-layers (11) is less than the number of availables
+cores (16). Changing suggested number of w-layers to 16.
+Will process 16/16 w-layers per pass.
+Fourier transforms... Prediction pass 0...
+Rows that were required: 835632/0
+Total rows written: 835632 (overhead: inf%)
+ == Constructing image ==
+Selected channels: 0-192
+Determining min and max w & beam size... DONE (w=[4.57167e-06 -- 14.0513] lambdas)
+Will process 16/16 w-layers per pass.
+Gridding pass 0... Fourier transforms...
+Storing 1077909776_W_bp1.0-residual-XX-tmp.fits
+Loading 1077909776_W_bp1.0-residual-XX-tmp.fits
+Writing residual image... DONE
+Opening reordered part 0 for 1077909776.ms
+ == Converting model image to visibilities ==
+Loading 1077909776_W_bp1.0-model-XY-tmp.fits
+Loading 1077909776_W_bp1.0-model-XYi-tmp.fits
+Selected channels: 0-192
+Determining min and max w & beam size... DONE (w=[4.57167e-06 -- 14.0513] lambdas)
+Will process 22/22 w-layers per pass.
+Fourier transforms... Prediction pass 0...
+Rows that were required: 835632/0
+Total rows written: 835632 (overhead: inf%)
+ == Constructing image ==
+Selected channels: 0-192
+Determining min and max w & beam size... DONE (w=[4.57167e-06 -- 14.0513] lambdas)
+Will process 22/22 w-layers per pass.
+Gridding pass 0... Fourier transforms...
+Storing 1077909776_W_bp1.0-residual-XY-tmp.fits
+Storing 1077909776_W_bp1.0-residual-XYi-tmp.fits
+Loading 1077909776_W_bp1.0-residual-XY-tmp.fits
+Writing residual image... DONE
+Opening reordered part 0 for 1077909776.ms
+ == Converting model image to visibilities ==
+Loading 1077909776_W_bp1.0-model-XY-tmp.fits
+Loading 1077909776_W_bp1.0-model-XYi-tmp.fits
+Selected channels: 0-192
+Determining min and max w & beam size... DONE (w=[4.57167e-06 -- 14.0513] lambdas)
+Will process 22/22 w-layers per pass.
+Fourier transforms... Prediction pass 0...
+Rows that were required: 835632/0
+Total rows written: 835632 (overhead: inf%)
+ == Constructing image ==
+Selected channels: 0-192
+Determining min and max w & beam size... DONE (w=[4.57167e-06 -- 14.0513] lambdas)
+Will process 22/22 w-layers per pass.
+Gridding pass 0... Fourier transforms...
+Adding XY and YX together...
+Loading 1077909776_W_bp1.0-residual-XY-tmp.fits
+Storing 1077909776_W_bp1.0-residual-XY-tmp.fits
+Adding XY and YX together...
+Loading 1077909776_W_bp1.0-residual-XYi-tmp.fits
+Storing 1077909776_W_bp1.0-residual-XYi-tmp.fits
+Opening reordered part 0 for 1077909776.ms
+ == Converting model image to visibilities ==
+Loading 1077909776_W_bp1.0-model-YY-tmp.fits
+Selected channels: 0-192
+Determining min and max w & beam size... DONE (w=[4.57167e-06 -- 14.0513] lambdas)
+The theoretically suggested number of w-layers (11) is less than the number of availables
+cores (16). Changing suggested number of w-layers to 16.
+Will process 16/16 w-layers per pass.
+Fourier transforms... Prediction pass 0...
+Rows that were required: 835632/0
+Total rows written: 835632 (overhead: inf%)
+ == Constructing image ==
+Selected channels: 0-192
+Determining min and max w & beam size... DONE (w=[4.57167e-06 -- 14.0513] lambdas)
+Will process 16/16 w-layers per pass.
+Gridding pass 0... Fourier transforms...
+Storing 1077909776_W_bp1.0-residual-YY-tmp.fits
+Loading 1077909776_W_bp1.0-residual-YY-tmp.fits
+Writing residual image... DONE
+3 major iterations were performed.
+Loading 1077909776_W_bp1.0-model-XX-tmp.fits
+Loading 1077909776_W_bp1.0-residual-XX-tmp.fits
+Rendering 8053 sources to restored image... DONE
+Writing restored image... DONE
+Loading 1077909776_W_bp1.0-model-XY-tmp.fits
+Loading 1077909776_W_bp1.0-residual-XY-tmp.fits
+Rendering 8053 sources to restored image... DONE
+Writing restored image... DONE
+Loading 1077909776_W_bp1.0-model-XYi-tmp.fits
+Loading 1077909776_W_bp1.0-residual-XYi-tmp.fits
+Rendering 8053 sources to restored image... DONE
+Writing restored image... DONE
+Loading 1077909776_W_bp1.0-model-YY-tmp.fits
+Loading 1077909776_W_bp1.0-residual-YY-tmp.fits
+Rendering 8053 sources to restored image... DONE
+Writing restored image... DONE
+Image buf alloc stats:
+         max alloc'd images = 35 real + 54 complex
+       max allocated chunks = 72
+      current allocated mem = 10.9 GB 
+Inversion: 00:04:33.395980, prediction: 00:08:08.516721, cleaning: 00:11:06.237711
+Writing changed model back to 1077909776.ms:
+ 0%....10%....20%....30%....40%....50%....60%....70%....80%....90%....100%
+Cleaning up temporary files...
+Start time = Epoch: 56719::19:22:42.5000, end time = Epoch: 56719::19:24:33.5000
+Using mid time = Epoch: 56719::19:23:38.0000
+Delays: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+Zenith: -151.139 RA, -26.7009 dec, 0 HA.
+Reference dir: -151.379 RA, -26.634 dec.
+Searching mwapy/pb/Jmatrix.fits... /short/ek6/MWA_Code/lib/python2.7/site-packages/mwapy/pb/Jmatrix.fits
+Loading ZA/PH values...
+Loading J lookup matrix for frequency (MHz) :
+  88.32 96 103.68 111.36 119.04 126.72 134.4 142.08 154.88 162.56 170.24 177.92 185.6 193.28 200.96 208.64 216.32 224 231.68 239.36 
+Searching mwapy/pb/ZMatrix.fits... /short/ek6/MWA_Code/lib/python2.7/site-packages/mwapy/pb/ZMatrix.fits
+Loading impedance matrices for freq (MHz): 88.3 96 103.7 111.4 119 126.7 134.4 142.1 154.9 162.6 170.2 177.9 185.6 193.3 201 208.6 216.3 224 231.7 239.4 
+Frequency interpolation of beam is disabled.
+Constructing beam: 0%Selected impedance table for frequency 154.88 MHz
+MWA 154235000Hz X dipole current amplitude
+1.169822991718156 1.150260167376325 1.152684162548384 1.165223352298114 
+1.184073542467023 1.17955149779909 1.17782816693398 1.187633265669656 
+1.187635807292208 1.177824549868132 1.179551887779202 1.184067640023275 
+1.165246745800678 1.152667841750996 1.150252510593329 1.169828195490485 
+MWA 154235000MHz X dipole current phase
+-40.14073158840015 -38.63483403689212 -38.68620196565467 -39.6296496071139 
+-38.91966349867026 -37.51973145127816 -37.70986372452801 -39.06793517779389 
+-39.06809855370851 -37.70999902908459 -37.51979955311175 -38.91976555179978 
+-39.62940040100731 -38.68624711138744 -38.63457729764428 -40.14164334745365 
+Selected impedance table for frequency 154.88 MHz
+MWA 154235000Hz X dipole current amplitude
+1.169822991718156 1.150260167376325 1.152684162548384 1.165223352298114 
+1.184073542467023 1.17955149779909 1.17782816693398 1.187633265669656 
+1.187635807292208 1.177824549868132 1.179551887779202 1.184067640023275 
+1.165246745800678 1.152667841750996 1.150252510593329 1.169828195490485 
+MWA 154235000MHz X dipole current phase
+-40.14073158840015 -38.63483403689212 -38.68620196565467 -39.6296496071139 
+-38.91966349867026 -37.51973145127816 -37.70986372452801 -39.06793517779389 
+-39.06809855370851 -37.70999902908459 -37.51979955311175 -38.91976555179978 
+-39.62940040100731 -38.68624711138744 -38.63457729764428 -40.14164334745365 
+....10%....20%....30%....40%....50%....60%....70%....80%....90%....100%
+
+Writing...
+-----------------------
+RA (rad) 3.641116
+DEC (rad) -0.464852
+LON (rad) 2.036293
+LAT (rad) -0.466055
+LST (from JD and LON) (rad) 3.644854
+JD 2456720.307431
+hour is 0.003738
+-----------------------
+Reading parameter set file
+Running WSClean
+Reading parameter set file
+Skipping subband image production stage (function:autoreduce)
+Copying all files to results dir (not creating cube)
+Finished Successfully
+leaving casapy...
+
+=========================================
+The start-up time of CASA may vary
+depending on whether the shared libraries
+are cached or not.
+=========================================
+
+CASA Version 4.2.0 (r26465)
+  Compiled on: Tue 2013/09/10 00:36:47 UTC
+['/short/ek6/CASA/casapy-stable-42.0.26465-001-64b/lib64/python2.6', '/short/ek6/MWA_Code/MWA_Tools/casatasks', '/short/ek6/CASA/casapy-stable-42.0.26465-001-64b/lib/python2.6/site-packages/setuptools-0.6c11-py2.6.egg', '/short/ek6/CASA/casapy-stable-42.0.26465-001-64b/lib/python2.6/site-packages/pip-1.1-py2.6.egg', '/short/ek6/CASA/casapy-stable-42.0.26465-001-64b/lib64/python2.6', '/short/ek6/CASA/casapy-stable-42.0.26465-001-64b/lib64/python2.6/heuristics', '/short/ek6/CASA/casapy-stable-42.0.26465-001-64b/lib64/python2.6/site-packages', '/short/ek6/MWA_Code/lib/python2.7/site-packages', '/short/ek6/CASA/casapy-stable-42.0.26465-001-64b/lib/python26.zip', '/short/ek6/CASA/casapy-stable-42.0.26465-001-64b/lib/python2.6', '/short/ek6/CASA/casapy-stable-42.0.26465-001-64b/lib/python2.6/plat-linux2', '/short/ek6/CASA/casapy-stable-42.0.26465-001-64b/lib/python2.6/lib-tk', '/short/ek6/CASA/casapy-stable-42.0.26465-001-64b/lib/python2.6/lib-old', '/short/ek6/CASA/casapy-stable-42.0.26465-001-64b/lib/python2.6/lib-dynload', '/short/ek6/CASA/casapy-stable-42.0.26465-001-64b/lib64/python2.6/site-packages/IPython/Extensions', '/short/ek6/CASA/casapy-stable-42.0.26465-001-64b/include', '/short/ek6/CASA/casapy-stable-42.0.26465-001-64b/lib', '/lib', '/usr/lib', '/short/ek6/CASA/casapy-stable-42.0.26465-001-64b/lib64', '/lib64', '/usr/lib64', '/apps/python/2.7.5/lib']
+___________________________________________________________________
+    For help use the following commands:
+    tasklist               - Task list organized by category
+    taskhelp               - One line summary of available tasks
+    help taskname          - Full help for task
+    toolhelp               - One line summary of available tools
+    help par.parametername - Full help for parameter name
+___________________________________________________________________
+will execute script /home/562/meb562/MWA_SIP/make_casa_stoke_I.py
+Activating auto-logging. Current session state plus future input saved.
+Filename       : ipython-20140611-042338.log
+Mode           : backup
+Output logging : False
+Raw input log  : False
+Timestamping   : False
+State          : active
+*** Loading ATNF ASAP Package...
+*** ... ASAP (4.2.0a rev#26106) import complete ***
+leaving casapy...
+Reading parameter set file
+Data already pre-processed, skipping
+Created /short/ek6/meb562/tmp_data/1077909776/1077909776.ms : parsing to CASA for reduction
+Reading parameter set file
+1077909776_C_bm1.0_XX_beamXX.fits 1077909776_C_bm1.0_XX_beamYY.fits 1077909776_C_bm1.0_XX.fits 1077909776_C_bm1.0_YY.fits 1077909776_C_bm1.0_I.fits
+Reading parameter set file
+======================================================================================
+			Resource Usage on 2014-06-11 14:23:54.472433:
+	JobId: 4845765.r-man2  
+	Project: ek6 
+	Exit Status: 0 (Linux Signal 0)
+	Service Units: 23.91
+	NCPUs Requested: 16				NCPUs Used: 16
+							CPU Time Used: 05:38:19
+	Memory Requested: 58gb 				Memory Used: 22gb
+							Vmem Used: 32gb
+	Walltime requested: 03:30:00 			Walltime Used: 01:29:39
+	jobfs request: 100mb				jobfs used: 1mb
+======================================================================================

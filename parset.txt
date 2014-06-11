@@ -22,28 +22,6 @@ dopbcor=False
 expedition='128'
 # expedition: This tells the pipeline the recommended flags for the expedition
 doflag=False
-#################################
-#        Locations              #
-#################################
-OBSLIST='/home/562/meb562/SIP/temp_obslist.txt'
-# A list of file(s) that you want to process through the pipeline
-# Obslist contains the *full* path to the uvfits files, one per line. 
-#UVFITS_Scratch='/short/ek6/meb562/tmp/'
-UVFITS_Scratch=''
-# Scratch file: all uvfits files are copied here and worked on. 
-# All calibration and imaging is performed in here and the results are copied
-# to the results directory when finished. 
-results_dir='/short/ek6/meb562/SIP_results/test'
-# All final fits *images* are copied here. Note, only one fits image is
-# produced per uvfits file - all subband images are stored as extra extensions.
-results_folder_prefix='128T_Cal'
-# Give a name to your output folder, it will be results_dir/prefix+Date+Time so you can
-# keep re-running the pipe without having to make new dirs.
-delays_file='/home/mebell/SIP/Oct_delays.txt'
-# If pbcor=True the delays_file is read and it searches for the corresponding
-# delays to the observation. This is the only input needed for PB calculation.  
-master_sync_dir='/home/mebell/SIP/results/MASTER_RSYNC/3C444/' 
-master_sync=False
 ###############################
 #         Imaging             #
 ###############################
@@ -97,13 +75,6 @@ calspex=-0.0
 calfreq='468.0MHz'
 # Reference Frequency. Example of Hyd A set by VLSS flux. 
 #_______________________________#
-# Calibration via cl comp list
-#cal_loc='your/dir/to/cl/HydA.cl' 
-# where HydA.cl contains the component list you want to calibrate on. 
-# Hash this out when using calibration via copying
-#_______________________________#
-#Calibration via copying
-cal_loc='/home/562/meb562/CALS/1077880672_PicA.cal '
 #################################
 #           FITS File           #
 #################################
@@ -113,7 +84,9 @@ cube=False
 # of files
 ################################
 #           WSClean            #
-################################           
+################################        
+doSplit=True # Get rid of the short spacings 
+split_uv_range='>0.03klambda'   
 wniter=20000
 wsize=3072
 wscale=0.0125
@@ -121,3 +94,5 @@ wthreshold=0.03
 wbriggs=-1.0
 dotwoimages=True
 wbriggs2=1.0
+########## Clean up ############
+doRemove=True # Remove all data after processing

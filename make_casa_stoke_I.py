@@ -8,7 +8,8 @@ XX_image = sys.argv[4]
 YY_image = sys.argv[5]
 XX_beam = sys.argv[6]
 YY_beam = sys.argv[7]
+outimage = sys.argv[8]
 XXYYimages=[XX_image,YY_image,XX_beam,YY_beam]
 immath(imagename=XXYYimages,expr='((IM0/IM2)+(IM1/IM3))/2', outfile='temp_stokes_I.image')
-outimage=obs_id+'_I.fits'
+#outimage=obs_id+'_I.fits'
 exportfits(fitsimage=outimage,imagename="temp_stokes_I.image",stokeslast=False,overwrite=True)

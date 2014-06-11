@@ -7,7 +7,7 @@ import re
 
 ####################################################
 #Parset files path(s)
-loc_parset_file    = '/Users/bel27a/Work/MWA_SIP/loc_parset.txt'
+loc_parset_file    = '/home/562/meb562/MWA_SIP/locs_parset.txt'
 #####################################################
 
 def read_parset(parset_file):
@@ -28,7 +28,7 @@ def read_parset(parset_file):
 ####################################################
 # Read the location parset to find the paths
 locs = read_parset(loc_parset_file)
-SIP_home= = locs['SIP_home']
+SIP_home   = locs['SIP_home']
 error_logs = locs['error_logs']
 
 ####################################################

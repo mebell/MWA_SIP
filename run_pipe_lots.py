@@ -8,7 +8,8 @@ import re
 
 ####################################################
 #Parset files path(s)
-loc_parset_file    = '/Users/bel27a/Work/MWA_SIP/loc_parset.txt'
+loc_parset_file    = '/home/562/meb562/MWA_SIP/locs_parset.txt'
+
 #####################################################
 
 def read_parset(parset_file):
@@ -29,7 +30,7 @@ def read_parset(parset_file):
 ####################################################
 # Read the location parset to find the paths
 locs = read_parset(loc_parset_file)
-SIP_home= = locs['SIP_home']
+SIP_home = locs['SIP_home']
 error_logs = locs['error_logs']
 
 ####################################################
@@ -41,7 +42,7 @@ def run_job(id, deps):
     job_file = open('download.go', 'a')
     print 'Writing appropriate download download file for observation ' 
     # Add the appropriate command. 
-    job_file.write('python '+SIP_home'+/get_data.py '+id)
+    job_file.write('python '+SIP_home+'/get_data.py '+id)
     job_file.close()
     ####### Error Logs ########
     name = id.split('/')[-1]        # Define the output and error log names
@@ -93,15 +94,36 @@ id_file = open(SIP_home+'/obs_id_list.txt', 'r')
 
 sub_jobs = []
 count = 0
+
 for line in id_file:
     print count
-    if count <= 28:
+    if count <= 10:
        run_job(line,deps = [])
-    if count >=29 and count <=56:
+    if count >=11 and count <=20:
        run_job(line,deps=sub_jobs)
-    if count >=56 and count <= 84: 
-       run_job(line,deps=sub_jobs[28:55])
+    if count >=21 and count <= 30:
+       run_job(line,deps=sub_jobs[10:19])
+    if count >=31 and count <= 40:
+       run_job(line,deps=sub_jobs[20:29])
+    if count >=41 and count <= 50:
+       run_job(line,deps=sub_jobs[30:39])
+    if count >=51 and count <= 60:
+       run_job(line,deps=sub_jobs[40:49])
+    if count >=61 and count <= 70:
+       run_job(line,deps=sub_jobs[50:59])
+    if count >=71 and count <= 80:
+       run_job(line,deps=sub_jobs[60:69])
     count = count + 1
+
+#for line in id_file:
+#    print count
+#    if count <= 28:
+#       run_job(line,deps = [])
+#    if count >=29 and count <=56:
+#       run_job(line,deps=sub_jobs)
+#    if count >=56 and count <= 84: 
+#       run_job(line,deps=sub_jobs[28:55])
+#    count = count + 1
 
 
 

@@ -5,25 +5,49 @@ import sys
 # different script to the download becuase we use different
 # ques to submit the qsub commands. Download = copq which uses node
 # that can see the outside world, but are limited in number. Normal 
-# que which only used compute nodes, with no outside access. 
+# que will only used compute nodes, with no outside access. The download
+# is run on the copy que nodes and tis script is run on the normal nodes.  
 
+####################################################
+#Parset files path(s)
+loc_parset_file    = '/home/562/meb562/MWA_SIP/locs_parset.txt'
+parset_file    = '/home/562/meb562/MWA_SIP/parset.txt'
+#####################################################
 
-################ Configs ####################
-OBS_ID_LIST = '/home/562/meb562/SIP/obs_id_list.txt' # This contains the GPS IDs of the observations you want to reduce.
-UVGEN_LOC    = '/short/ek6/meb562/tmp_data/'
-results_dir='/short/ek6/meb562/SIP_results/test'
-##############################################
+def read_parset(parset_file):
+    """
+     Read the parameter file defined in parset file path and return args
+    """
+    print 'Reading parameter set file'
+    f = open(parset_file,'r')
+    config_dict = {}
+    for line in f:
+        if line[0] == '#':
+            pass;
+        else:
+            items = line.split('=', 1)
+            config_dict[items[0]] = eval(items[1])
+    return config_dict
+
+####################################################
+# Read the location parset to find the paths
+locs = read_parset(loc_parset_file)
+SIP_home = locs['SIP_home']
+error_logs = locs['error_logs']
+msgen_loc    = locs['msgen_loc']
+results_dir = locs['results_dir']
+OBS_ID_LIST = open(SIP_home+'/obs_id_list.txt', 'r')
+####################################################
 
 def run_cotter(obs_id):
     #os.system('make_metafits.py --gps='+str(obs_id))
     os.system('cotter -o '+str(obs_id)+'.ms -mem 75 -timeavg 2 -freqavg 4 -m '+str(obs_id)+'.metafits '+str(obs_id)+'/*.fits')
-    #os.system('cotter -o '+str(obs_id)+'.ms -mem 75 -timeavg 1 -freqavg 1 -m '+str(obs_id)+'.metafits '+str(obs_id)+'/*.fits')
 
 ############## Main code ######################
 
 obs_id = sys.argv[1] # Get the obs_id we want to work on. Parsed to the script by run_pipe.py
 
-os.chdir(UVGEN_LOC)
+os.chdir(msgen_loc)
 os.chdir(obs_id)
 
 if os.path.exists(str(obs_id)+'.ms'):
@@ -36,22 +60,54 @@ uvfits_dir = os.getcwd()
 #os.system('change_db.py curtin')
 file_to_process = (str(uvfits_dir)+'/'+str(obs_id)+".ms") 
 print 'Created '+file_to_process+' : parsing to CASA for reduction' 
-os.system("/short/ek6/CASA/casapy-stable-42.0.26465-001-64b/casapy -c /home/562/meb562/SIP/SIP_128T_parallel_phase_2.py  "+file_to_process)
+os.system("/short/ek6/CASA/casapy-stable-42.0.26465-001-64b/casapy -c "+SIP_home+"/SIP_128T_parallel_phase_2.py  "+file_to_process)
 # Run make_beam.py outside of casa becuase pyephem fails to compile with casa 4.2 THIS IS A PAIN IN THE ARSE!!!!!
 f = open('delays.txt')
 lines = f.readlines()
 str_delays = lines[0]
 f.close()
-outimage = obs_id+'_XX.fits'
-os.system('python /short/ek6/MWA_Code/bin/make_beam.py -f '+outimage+' -d '+str_delays) # Make the beam files
-XX_beam = obs_id+'_XX_beamXX.fits'
-YY_beam = obs_id+'_XX_beamYY.fits'
-XX_image = obs_id+'_XX.fits'
-YY_image = obs_id+'_YY.fits'
-os.system('/short/ek6/CASA/casapy-stable-42.0.26465-001-64b/casapy -c /home/562/meb562/SIP/make_casa_stoke_I.py '+str(obs_id)+' '+str(XX_image)+' '+str(YY_image)+' '+str(XX_beam)+' '+str(YY_beam))
+parset = read_parset(parset_file)
+robust = parset['robust']
+robust = float(robust)
+if robust < 0:
+      robust = str(robust)
+      robust = robust.split('-')[1]
+      outimage_XX = obs_id+'_C_bm'+str(robust)+'_XX.fits'
+      outimage_YY = obs_id+'_C_bm'+str(robust)+'_YY.fits'
+      outimage_I = obs_id+'_C_bm'+str(robust)+'_I.fits'
+      beam_XX = obs_id+'_C_bm'+str(robust)+'_XX_beamXX.fits'
+      beam_YY = obs_id+'_C_bm'+str(robust)+'_XX_beamYY.fits'
+else:
+      outimage_XX = obs_id+'_C_bp'+str(robust)+'_XX.fits'
+      outimage_YY = obs_id+'_C_bp'+str(robust)+'_YY.fits'
+      outimage_I = obs_id+'_C_bp'+str(robust)+'_I.fits'
+      beam_XX = obs_id+'_C_bp'+str(robust)+'_XX_beamXX.fits'
+      beam_YY = obs_id+'_C_bp'+str(robust)+'_XX_beamYY.fits'
+
+#outimage = obs_id+'_XX.fits'
+os.system('python /short/ek6/MWA_Code/bin/make_beam.py -f '+outimage_XX+' -d '+str_delays) # Make the beam files
+#XX_beam = obs_id+'_XX_beamXX.fits'
+#YY_beam = obs_id+'_XX_beamYY.fits'
+XX_beam = beam_XX
+YY_beam = beam_YY
+XX_image = outimage_XX
+YY_image = outimage_YY
+
+print XX_beam, YY_beam, XX_image, YY_image, outimage_I
+
+os.system('/short/ek6/CASA/casapy-stable-42.0.26465-001-64b/casapy -c '+SIP_home+'/make_casa_stoke_I.py '+str(obs_id)+' '+str(XX_image)+' '+str(YY_image)+' '+str(XX_beam)+' '+str(YY_beam) +' '+str(outimage_I))
+# Copy all the images to results dir. 
 os.system('cp *_I.fits '+results_dir)
-os.system('cp *XX-image* '+results_dir)
-os.system('cp *YY-image* '+results_dir)
-os.system('cp *image-* '+results_dir)
-# Remove the raw data, may want to turn this off. 
-#os.system('rm -rf '+str(UVGEN_LOC)+'/'+str(obs_id))     
+os.system('cp *_XX.fits '+results_dir)
+os.system('cp *_YY.fits '+results_dir)
+os.system('cp *_Q.fits '+results_dir)
+os.system('cp *_U.fits '+results_dir)
+os.system('cp *_V.fits '+results_dir)
+#os.system('cp *XX-image* '+results_dir)
+#os.system('cp *YY-image* '+results_dir)
+#os.system('cp *image-* '+results_dir)
+# Remove the raw data (optional see parset)
+parset = read_parset(parset_file)
+doRemove = parset['doRemove']
+if doRemove:
+   os.system('rm -rf '+str(msgen_loc)+'/'+str(obs_id))     

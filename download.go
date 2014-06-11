@@ -1,9 +1,8 @@
-#P#!/bin/bash
-#PBS -l walltime=03:30:00
-#PBS -l mem=58GB
-#PBS -l ncpus=16
+#!/bin/bash
+#PBS -l walltime=03:00:00
+#PBS -l mem=1GB
 #PBS -P ek6
-#PBS -q normal
+#PBS -q copyq
 
 # Import the bloody bash file again becuase qsub is retarded. 
 #MIRIAD
@@ -49,4 +48,5 @@ export PGUSER=mwa
 module load python/2.7.5 python/2.7.5-matplotlib
 
 ################# CODE #######################
-#change_db.py curtin
+
+python /home/562/meb562/MWA_SIP/get_data.py 1077881568

@@ -1,0 +1,45 @@
+25576-casaviewer-svr: cannot connect to X server 
+casalogger: cannot connect to X server 
+# WARNING:mwapy.pb.mwapb: This module 'mwapy.pb.mwapb' is deprecated and does not use the up-to-date beam models. Use the new primary beam model instead in mwa_tile.
+2014-06-11 02:57:45	SEVERE	MeasTable::dUTC(Double) (file measures/Measures/MeasTable.cc, line 6657)	Leap second table TAI_UTC seems out-of-date. 
+2014-06-11 02:57:45	SEVERE	MeasTable::dUTC(Double) (file measures/Measures/MeasTable.cc, line 6657)+	Until table is updated (see aips++ manager) times and coordinates
+2014-06-11 02:57:45	SEVERE	MeasTable::dUTC(Double) (file measures/Measures/MeasTable.cc, line 6657)+	derived from UTC could be wrong by 1s or more.
+
+0%....10....20....30....40....50....60....70....80....90....100%
+
+0%....10....20....30....40....50....60....70....80....90....100%
+
+0%....10....20....30....40....50....60....70....80....90....100%
+
+0%....10....20....30....40....50....60....70....80....90....100%
+
+0%....10....20....30....40....50....60....70....80....90....100%
+
+0%....10....20....30....40....50....60....70....80....90....100%
+
+0%....10....20....30....40....50....60....70....80....90....100%
+
+0%....10....20....30....40....50....60....70....80....90....100%
+
+0%....10....20....30....40....50....60....70....80....90....100%
+
+0%....10....20....30....40....50....60....70....80....90....100%
+
+0%....10....20....30....40....50....60....70....80....90....100%
+
+0%....10....20....30....40....50....60....70....80....90....100%
+2014-06-11 03:45:10	INFO	MeasIERS::fillMeas(MeasIERS::Files, Double) 	Requested JD 56719.8 is outside the range of the IERS (Earth axis data) table.
+2014-06-11 03:45:10	INFO	MeasIERS::fillMeas(MeasIERS::Files, Double) +	Calculations will proceed with less precision
+2014-06-11 03:45:10	SEVERE	MeasTable::dUTC(Double) (file /short/ek6/MWA_Code/casacore-1.5.0/measures/Measures/MeasTable.cc, line 6649)	Leap second table TAI_UTC seems out-of-date. 
+2014-06-11 03:45:10	SEVERE	MeasTable::dUTC(Double) (file /short/ek6/MWA_Code/casacore-1.5.0/measures/Measures/MeasTable.cc, line 6649)+	Until table is updated (see aips++ manager) times and coordinates
+2014-06-11 03:45:10	SEVERE	MeasTable::dUTC(Double) (file /short/ek6/MWA_Code/casacore-1.5.0/measures/Measures/MeasTable.cc, line 6649)+	derived from UTC could be wrong by 1s or more.
+2014-06-11 04:17:57	INFO	MeasIERS::fillMeas(MeasIERS::Files, Double) 	Requested JD 56719.8 is outside the range of the IERS (Earth axis data) table.
+2014-06-11 04:17:57	INFO	MeasIERS::fillMeas(MeasIERS::Files, Double) +	Calculations will proceed with less precision
+2014-06-11 04:17:57	SEVERE	MeasTable::dUTC(Double) (file /short/ek6/MWA_Code/casacore-1.5.0/measures/Measures/MeasTable.cc, line 6649)	Leap second table TAI_UTC seems out-of-date. 
+2014-06-11 04:17:57	SEVERE	MeasTable::dUTC(Double) (file /short/ek6/MWA_Code/casacore-1.5.0/measures/Measures/MeasTable.cc, line 6649)+	Until table is updated (see aips++ manager) times and coordinates
+2014-06-11 04:17:57	SEVERE	MeasTable::dUTC(Double) (file /short/ek6/MWA_Code/casacore-1.5.0/measures/Measures/MeasTable.cc, line 6649)+	derived from UTC could be wrong by 1s or more.
+# WARNING:mwapy.pb.mwapb: This module 'mwapy.pb.mwapb' is deprecated and does not use the up-to-date beam models. Use the new primary beam model instead in mwa_tile.
+# DEBUG:mwapy.pb.primary_beam: Delays: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+28410-casaviewer-svr: cannot connect to X server 
+casalogger: cannot connect to X server 
+# WARNING:mwapy.pb.mwapb: This module 'mwapy.pb.mwapb' is deprecated and does not use the up-to-date beam models. Use the new primary beam model instead in mwa_tile.

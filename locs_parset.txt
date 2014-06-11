@@ -1,3 +1,7 @@
 # Parset containing the locations of all dependencies and input/output dirs
 error_logs='/home/562/meb562/MWA_SIP/error_logs'
 SIP_home='/home/562/meb562/MWA_SIP'
+msgen_loc='/short/ek6/meb562/tmp_data'
+results_dir='/short/ek6/meb562/SIP_results/MWA_SIP_out'
+anoko_build='/short/ek6/MWA_Code/anoko/mwa-reduce/build_2'
+cal_loc='/home/562/meb562/CALS/1077896568_HydA.cal'

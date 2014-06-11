@@ -50,3 +50,4 @@ module load python/2.7.5 python/2.7.5-matplotlib
 
 ################# CODE #######################
 #change_db.py curtin
+python /home/562/meb562/MWA_SIP/pre_proc_pipe.py 1077881568

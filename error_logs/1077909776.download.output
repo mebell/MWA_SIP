@@ -1,0 +1,16 @@
+Reading parameter set file
+Data folder already made, partial download might not have completed.
+Getting observation delays, writing to file
+======================================================================================
+			Resource Usage on 2014-06-11 12:53:31.099997:
+	JobId: 4845764.r-man2  
+	Project: ek6 
+	Exit Status: 0 (Linux Signal 0)
+	Service Units: 0.06
+	NCPUs Requested: 1				NCPUs Used: 1
+							CPU Time Used: 00:00:12
+	Memory Requested: 1gb 				Memory Used: 1gb
+							Vmem Used: 1gb
+	Walltime requested: 03:00:00 			Walltime Used: 00:03:20
+	jobfs request: 100mb				jobfs used: 1mb
+======================================================================================
