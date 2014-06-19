@@ -36,7 +36,7 @@ error_logs = locs['error_logs']
 # Work out which GPS ID / datafile we are going to work on
 id_file = open(SIP_home+'/obs_id_list.txt', 'r')
 
-for line in id_file: 
+for line in id_file:
     ### Run the download job on the  "copy" que (see agruments in header of "template_download)
     os.system('cp template_download download.go') # Copy the template jobfile 
     job_file = open('download.go', 'a')
