@@ -13,7 +13,11 @@ import pyfits
 import csv
 
 from mwapy import fits_utils as FU
-from mwapy.pb import mwapb
+try:
+   from mwapy.pb import mwapb
+except:
+   pass;
+   print 'mwa pb module did not import' 
 
 import mwapy
 
@@ -80,6 +84,12 @@ def autoreduce(fitsfile, expedition, dosub, doimage, dopbcor, out_dir):
             clearcal(newvis)
             splitvises.append(newvis)
         spw=''
+     ############ WSClean ###############
+    doWSClean = params['doWSClean']
+    obsid = filename.split('.')[0]
+    if doWSClean:
+        WSClean(obsid)
+     ############# doCASA image ########
     if doimage:
         #### Initialise list
         threshold=[0,0,0,0,0]
@@ -234,8 +244,6 @@ def autoreduce(fitsfile, expedition, dosub, doimage, dopbcor, out_dir):
                #out_images.append(outimage)
                #out_stokes.append(stokes)
                #Ext_label.append(imagename)
-        ############ WSClean ###############
-        WSClean(obsid)
         ##### Image each sub-band file #####
         if dosub:
             for vis in splitvises:
@@ -302,7 +310,6 @@ def autoreduce(fitsfile, expedition, dosub, doimage, dopbcor, out_dir):
     print 'Finished Successfully'
 
 ############### autocal ##################
-
 def autocal(vis):
     '''
     Function to automatically calibrate the data. This function will use setjy or you can define a cl file to calibrate off
@@ -379,6 +386,7 @@ def getCell_Image_size(msFile):
 
 def WSClean(obs_id):
         params  = read_parset(parset_file)
+        locs = read_parset(loc_parset_file)
         wniter = params['wniter']
         wsize = params['wsize']
         wscale = params['wscale']
@@ -386,7 +394,9 @@ def WSClean(obs_id):
         wbriggs = params['wbriggs']
         dotwoimages = params['dotwoimages']
         wbriggs2 = params['wbriggs2']
-        #name = str(obs_id)+'_briggs_'+str(wbriggs)
+        doFullimage = params['doFullimage']
+        do_W_subbands = params['do_W_subbands']
+        wsclean_build = locs['wsclean_build']
         print 'Running WSClean'
         wbriggs = float(wbriggs) 
         wbriggs2 = float(wbriggs2)
@@ -398,21 +408,22 @@ def WSClean(obs_id):
                name = obs_id+'_W_bp'+str(wbriggs)
         locs = read_parset(loc_parset_file)
         anoko_build = locs['anoko_build']
-        os.system(anoko_build+'/wsclean -joinpolarizations -pol xx,xy,yx,yy -mgain 0.95 -weight briggs '+str(wbriggs)+' -absmem 57 -name '+name+' -size '+str(wsize)+' '+str(wsize)+'  -scale '+str(wscale)+' -niter '+str(wniter)+' -threshold '+str(wthreshold)+' '+str(obs_id)+'.ms')
-        os.system(anoko_build+'/beam -proto '+name+'-XX-image.fits -ms '+str(obs_id)+'.ms')
-        ######### Make the full images 
-        os.system(anoko_build+'/pbcorrect '+name+' image.fits beam stokes')
-        os.system('mv stokes-I.fits '+name+'_I.fits')
-        os.system('mv stokes-Q.fits '+name+'_Q.fits')
-        os.system('mv stokes-U.fits '+name+'_U.fits')
-        os.system('mv stokes-V.fits '+name+'_V.fits')
-        ######## Rename the XX and YY files 
-        old_name_X = name+'-XX-image.fits'
-        old_name_Y = name+'-YY-image.fits'
-        new_name_X = old_name_X.replace('-XX-image.fits','_XX.fits')
-        new_name_Y = old_name_Y.replace('-YY-image.fits','_YY.fits')
-        os.system('mv '+old_name_X+' '+new_name_X)
-        os.system('mv '+old_name_Y+' '+new_name_Y)
+        if doFullimage:
+           os.system(wsclean_build+'/wsclean -joinpolarizations -pol xx,xy,yx,yy -mgain 0.95 -weight briggs '+str(wbriggs)+' -absmem 57 -name '+name+' -size '+str(wsize)+' '+str(wsize)+'  -scale '+str(wscale)+' -niter '+str(wniter)+' -threshold '+str(wthreshold)+' '+str(obs_id)+'.ms')
+           os.system(anoko_build+'/beam -proto '+name+'-XX-image.fits -ms '+str(obs_id)+'.ms')
+           ######### Make the full images 
+	   os.system(anoko_build+'/pbcorrect '+name+' image.fits beam stokes')
+	   os.system('mv stokes-I.fits '+name+'_I.fits')
+	   os.system('mv stokes-Q.fits '+name+'_Q.fits')
+	   os.system('mv stokes-U.fits '+name+'_U.fits')
+	   os.system('mv stokes-V.fits '+name+'_V.fits')
+	   ######## Rename the XX and YY files 
+           old_name_X = name+'-XX-image.fits'
+           old_name_Y = name+'-YY-image.fits'
+	   new_name_X = old_name_X.replace('-XX-image.fits','_XX.fits')
+	   new_name_Y = old_name_Y.replace('-YY-image.fits','_YY.fits')
+	   os.system('mv '+old_name_X+' '+new_name_X)
+	   os.system('mv '+old_name_Y+' '+new_name_Y)
         ################################
         if dotwoimages: # Repeat the imaging with different briggs weighting
            if wbriggs2 < 0:
@@ -421,7 +432,7 @@ def WSClean(obs_id):
                name = obs_id+'_W_bm'+str(wbriggs2)
            else:
                name = obs_id+'_W_bp'+str(wbriggs2)
-           os.system(anoko_build+'/wsclean -joinpolarizations -pol xx,xy,yx,yy -mgain 0.95 -weight briggs '+str(wbriggs2)+' -absmem 57 -name '+name+' -size '+str(wsize)+' '+str(wsize)+'  -scale '+str(wscale)+' -niter '+str(wniter)+' -threshold '+str(wthreshold)+' '+str(obs_id)+'.ms')
+           os.system(wsclean_build+'/wsclean -joinpolarizations -pol xx,xy,yx,yy -mgain 0.95 -weight briggs '+str(wbriggs2)+' -absmem 57 -name '+name+' -size '+str(wsize)+' '+str(wsize)+'  -scale '+str(wscale)+' -niter '+str(wniter)+' -threshold '+str(wthreshold)+' '+str(obs_id)+'.ms')
            os.system(anoko_build+'/beam -proto '+name+'-XX-image.fits -ms '+str(obs_id)+'.ms')
            ######### Make the full images 
            os.system(anoko_build+'/pbcorrect '+name+' image.fits beam stokes')
@@ -436,6 +447,26 @@ def WSClean(obs_id):
            new_name_Y = old_name_Y.replace('-YY-image.fits','_YY.fits')
            os.system('mv '+old_name_X+' '+new_name_X)
            os.system('mv '+old_name_Y+' '+new_name_Y)
+        if do_W_subbands:
+           os.system(wsclean_build+'/wsclean -joinpolarizations -pol xx,xy,yx,yy -channelsout 4 -mgain 0.95 -weight briggs '+str(wbriggs)+' -absmem 57 -name '+name+' -size '+str(wsize)+' '+str(wsize)+'  -scale '+str(wscale)+' -niter '+str(wniter)+' -threshold '+str(wthreshold)+' '+str(obs_id)+'.ms')
+           for band in range(5): 
+		   if band <=3:
+		       subname = name+'-000'+str(band) 
+		       os.system(anoko_build+'/beam -proto '+subname+'-XX-image.fits -ms '+str(obs_id)+'.ms')
+		       os.system(anoko_build+'/pbcorrect '+subname+' image.fits beam stokes') 
+		       os.system('mv stokes-I.fits '+subname+'_I.fits')
+		       os.system('mv stokes-Q.fits '+subname+'_Q.fits')
+		       os.system('mv stokes-U.fits '+subname+'_U.fits')
+		       os.system('mv stokes-V.fits '+subname+'_V.fits')
+		   else:      
+		       subname = name+'-MFS'
+		       os.system(anoko_build+'/beam -proto '+subname+'-XX-image.fits -ms '+str(obs_id)+'.ms')        
+		       os.system(anoko_build+'/pbcorrect '+subname+' image.fits beam stokes')
+		       os.system('mv stokes-I.fits '+subname+'_I.fits')
+		       os.system('mv stokes-Q.fits '+subname+'_Q.fits')
+		       os.system('mv stokes-U.fits '+subname+'_U.fits')
+		       os.system('mv stokes-V.fits '+subname+'_V.fits')           
+		   os.system('rm  *beam-*')
 
 ############ Run the code ##################
 print '---------------------------------'

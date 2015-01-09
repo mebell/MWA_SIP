@@ -126,7 +126,7 @@ lines=id_file.readlines()
 
 sub_jobs = []
 count = 0
-step = 18
+step = 10
 
 for start in range(0,num_lines,step):
     stop = start + step
