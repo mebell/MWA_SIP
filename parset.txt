@@ -4,7 +4,7 @@
 # Note, do not add spaces between the '=' for all parameters below - it will read
 # the white space and crash. Do not add extra lines either.
 ############################################################################ 
-doimage=True
+doimage=False
 # doimage: If True, it will produce an image, if False it will just do
 # calibration (useful for stacking etc).
 dormsfind=False
@@ -85,6 +85,7 @@ cube=False
 ################################
 #           WSClean            #
 ################################        
+doWSClean=True
 doSplit=True # Get rid of the short spacings 
 split_uv_range='>0.03klambda'   
 wniter=20000
@@ -92,7 +93,9 @@ wsize=3072
 wscale=0.0125
 wthreshold=0.03
 wbriggs=-1.0
-dotwoimages=True
+doFullimage=True # Makes one single broadband image with "wbriggs" value. Turn off if you are doing subbands
+dotwoimages=False # Make a second image with "wbriggs2"
 wbriggs2=1.0
+do_W_subbands=False # Make an image with 4 subbands, also produces full MFS image (with different naming convention). Need to change the qsub time - it will take longer ~6 hours.
 ########## Clean up ############
-doRemove=True # Remove all data after processing
+doRemove=False # Remove all data after processing
