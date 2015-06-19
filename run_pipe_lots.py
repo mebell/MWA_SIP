@@ -89,7 +89,7 @@ def run_job(id, deps):
        ##############################
        ######### Download ########### 
        print 'Submitting download to qsub DEPENDENCY'
-       download_command = 'qsub -W depend=afterok:'+dep_string+' -e '+error_log+' -o '+output_log+' download.go'
+       download_command = 'qsub -W depend=afterany:'+dep_string+' -e '+error_log+' -o '+output_log+' download.go'
        print 'Download command is '+download_command
        down_out =os.popen(download_command).read()
        down_out = re.split("[\r\n]+", down_out)[0] # Remove return carriage
@@ -126,7 +126,7 @@ lines=id_file.readlines()
 
 sub_jobs = []
 count = 0
-step = 10
+step = 60
 
 for start in range(0,num_lines,step):
     stop = start + step

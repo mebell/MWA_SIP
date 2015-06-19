@@ -19,7 +19,7 @@ for obs_id in id_file:
     obs_id = re.split("[\r\n]+",obs_id)[0] 
     os.chdir(results_dir)
     n_files = len(glob.glob('*'+obs_id+'*'))
-    if n_files == 15: 
+    if n_files == 6: 
        completed +=1
     else:
        bad_obs.append(obs_id)

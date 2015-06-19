@@ -467,7 +467,10 @@ def WSClean(obs_id):
 		       os.system('mv stokes-U.fits '+subname+'_U.fits')
 		       os.system('mv stokes-V.fits '+subname+'_V.fits')           
 		   os.system('rm  *beam-*')
-
+        #if do_selfcal:
+           # A call to perform selfcal on the images, doFullimage, dotwoimages, do_W_subbands need to be set to false to get this to run properly
+           
+               
 ############ Run the code ##################
 print '---------------------------------'
 print 'MWA 128T Standard Imaging Pipeline'
