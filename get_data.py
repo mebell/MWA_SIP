@@ -12,6 +12,7 @@ import glob
 ####################################################
 #Parset files path(s)
 loc_parset_file    = '/home/562/meb562/MWA_SIP/locs_parset.txt'
+parset_file    = '/home/562/meb562/MWA_SIP/parset.txt'
 #####################################################
 
 def read_parset(parset_file):
@@ -76,7 +77,13 @@ def run_obsresolve(obs_id):
 
 obs_id = sys.argv[1] # Get the obs_id we want to work on. Parsed to the script by run_pipe.py
 
-cal = find_cal(obs_id) # Look for a calibrator
+parset = read_parset(parset_file)
+do_parset_cal = parset['do_parset_cal']
+
+if do_parset_cal:
+        cal = locs['cal_loc']
+else:
+        cal = find_cal(obs_id) # Look for a calibrator
 
 if cal == None:
    print 'Error: No calibrator found, exciting processing'

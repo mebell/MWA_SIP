@@ -59,7 +59,9 @@ else:
 uvfits_dir = os.getcwd()
 
 ######## Find a calibrator ##########
-do_parset_cal = False
+parset = read_parset(parset_file)
+do_parset_cal = parset['do_parset_cal']
+
 if do_parset_cal:
         cal = locs['cal_loc']
 else:
@@ -85,7 +87,6 @@ os.system('cp *_U.fits '+results_dir)
 os.system('cp *_V.fits '+results_dir)
 # Remove the raw data (optional see parset)
 
-parset = read_parset(parset_file)
 doRemove = parset['doRemove']
 
 if doRemove:
