@@ -49,4 +49,4 @@ module load python/2.7.5 python/2.7.5-matplotlib
 
 ################# CODE #######################
 
-python /home/562/meb562/MWA_SIP/get_data.py 1063384736
+python /home/562/meb562/MWA_SIP/get_data.py 1093112584
