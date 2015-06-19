@@ -61,6 +61,10 @@ doStokesI=False
 ##################################
 cal_method=3
 # 1 = Setjy; 2 = mutlisource; 3 = copy solutions
+do_parset_cal=True # True = use calibrator in locs parset. False = search for approporaite calibrator. 
+# Use True to apply a cal observation to a given night of MWATS. Use False to
+# let the code choose the best calibrator. Note, it will then use different
+# ones for the observations. Usually closest in time and position.  
 #_________________________________
 refant='Tile012'
 bsolint='inf'
@@ -83,12 +87,17 @@ cube=False
 # False = output all fits images seperately (+beams) n.b. this will create a lot
 # of files
 ################################
+#     Ionosphere flagging      #
+################################
+doFlagEast=True
+doFlagWest=False
+################################
 #           WSClean            #
 ################################        
-doWSClean=True
+doWSClean=False
 doSplit=True # Get rid of the short spacings 
 split_uv_range='>0.03klambda'   
-wniter=20000
+wniter=2000
 wsize=3072
 wscale=0.0125
 wthreshold=0.03
@@ -97,5 +106,6 @@ doFullimage=True # Makes one single broadband image with "wbriggs" value. Turn o
 dotwoimages=False # Make a second image with "wbriggs2"
 wbriggs2=1.0
 do_W_subbands=False # Make an image with 4 subbands, also produces full MFS image (with different naming convention). Need to change the qsub time - it will take longer ~6 hours.
+doSelfcal=True
 ########## Clean up ############
 doRemove=False # Remove all data after processing
