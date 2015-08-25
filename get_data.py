@@ -71,7 +71,8 @@ msgen_loc    = locs['msgen_loc']
 
 def run_obsresolve(obs_id):
     print "Getting DATA: Running obsresolve with GPS ID = "+str(obs_id)
-    os.system("obsresolve.py -r ngas01.ivec.org -s ngas01.ivec.org -d ./ -o "+str(obs_id))
+    #os.system("obsresolve.py -r ngas01.ivec.org -s ngas01.ivec.org -d ./ -o "+str(obs_id))
+    os.system('/short/ek6/MWA_Code/MWA_Tools/scripts/obsdownload.py -o '+str(obs_id))
 
 ############## Main code ######################
 
