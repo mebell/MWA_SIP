@@ -1,5 +1,5 @@
 #P#!/bin/bash
-#PBS -l walltime=04:30:00
+#PBS -l walltime=3:00:00
 #PBS -l mem=58GB
 #PBS -l ncpus=16
 #PBS -P ek6
@@ -50,4 +50,4 @@ module load python/2.7.5 python/2.7.5-matplotlib
 
 ################# CODE #######################
 #change_db.py curtin
-python /home/562/meb562/MWA_SIP/pre_proc_pipe.py 1093112584
+python /home/562/meb562/MWA_SIP/pre_proc_pipe.py 1140891168
