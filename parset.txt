@@ -61,7 +61,8 @@ doStokesI=False
 ##################################
 cal_method=3
 # 1 = Setjy; 2 = mutlisource; 3 = copy solutions
-do_parset_cal=True # True = use calibrator in locs parset. False = search for approporaite calibrator. 
+do_parset_cal=False # True = use calibrator in locs parset. False = search for approporaite calibrator.
+do_MWATS_cal=True   # Use the MWATS cals found in cals/MWATS_cal_list.txt 
 # Use True to apply a cal observation to a given night of MWATS. Use False to
 # let the code choose the best calibrator. Note, it will then use different
 # ones for the observations. Usually closest in time and position.  
@@ -89,12 +90,12 @@ cube=False
 ################################
 #     Ionosphere flagging      #
 ################################
-doFlagEast=True
+doFlagEast=False
 doFlagWest=False
 ################################
 #           WSClean            #
 ################################        
-doWSClean=False
+doWSClean=True
 doSplit=True # Get rid of the short spacings 
 split_uv_range='>0.03klambda'   
 wniter=2000
@@ -107,5 +108,6 @@ dotwoimages=False # Make a second image with "wbriggs2"
 wbriggs2=1.0
 do_W_subbands=False # Make an image with 4 subbands, also produces full MFS image (with different naming convention). Need to change the qsub time - it will take longer ~6 hours.
 doSelfcal=True
+do_variance=False #Produce 160 MHz non-deconvolved subband images
 ########## Clean up ############
-doRemove=False # Remove all data after processing
+doRemove=True # Remove all data after processing
