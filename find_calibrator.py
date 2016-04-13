@@ -45,7 +45,7 @@ def find_cal(obs_id):
        cal_name = cal_output.split()[10]
        print str(obs_id)+": recommended cal is "+str(cal_id)+' = '+str(cal_name) 
     except:
-       print str(obs_id)+": cannot find suitable cal "
+       print str(obs_id)+": cannot find suitable cal " 
        cal_id=None
        pass;
     os.chdir('/home/562/meb562/CALS/')
@@ -54,17 +54,17 @@ def find_cal(obs_id):
     for cal in glob.glob('*.cal'):
         cal_num = cal[0:10]
         if cal_id == cal_num:
-           print "Found calibration file "+cal
+           print "Found calibration file "+cal 
            return_cal = cal_id
     if return_cal == None: 
-           print "No calibrator file found, please generate it"
+           print "No calibrator file found, please generate it" 
            return_cal = cal_id
     return return_cal
         
 get_cals = []
 count = 1
 for line in id_file:
-    print count
+    #print count
     return_cal = find_cal(line)
     if return_cal == None:
        pass;

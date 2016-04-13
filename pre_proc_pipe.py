@@ -33,7 +33,8 @@ def read_parset(parset_file):
 
 def run_cotter(obs_id):
     #os.system('make_metafits.py --gps='+str(obs_id))
-    os.system('cotter -o '+str(obs_id)+'.ms -mem 75 -timeres 2 -freqres 80 -m '+str(obs_id)+'.metafits '+str(obs_id)+'/*.fits')
+    os.system('mv '+str(obs_id)+'/*_metafits_ppds.fits .')
+    os.system('cotter -o '+str(obs_id)+'.ms -mem 75 -timeres 2 -freqres 80 -m '+str(obs_id)+'.metafits '+str(obs_id)+'/*.fits') 
 
 ####################################################
 # Read the location parset to find the paths
@@ -85,9 +86,9 @@ os.system('cp *_YY.fits '+results_dir)
 os.system('cp *_Q.fits '+results_dir)
 os.system('cp *_U.fits '+results_dir)
 os.system('cp *_V.fits '+results_dir)
+#os.system('cp *-image.fits '+results_dir)
 # Remove the raw data (optional see parset)
 
 doRemove = parset['doRemove']
-
 if doRemove:
    os.system('rm -rf '+str(msgen_loc)+'/'+str(obs_id))     

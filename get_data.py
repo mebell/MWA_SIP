@@ -1,7 +1,7 @@
 import os
 import sys
-import mwapy.get_observation_info
-from mwapy.obssched.base import schedule
+#import mwapy.get_observation_info
+#from mwapy.obssched.base import schedule
 from subprocess import Popen, PIPE
 import glob
 
@@ -60,6 +60,34 @@ def find_cal(obs_id):
            print "No calibrator file found, please generate it"
     return return_cal
 
+###############
+
+def find_cal_mwats(obs_id):
+    obs_id = obs_id.split('\n')[0]
+    obs_id = obs_id.strip()
+    date_output = Popen(["python", "/short/ek6/MWA_Code/bin/get_observation_info.py", "-g", str(obs_id)], stdout=PIPE).communicate()[0]
+    date_output = date_output.split()[7]
+    date_output = date_output.replace('/', '-')
+    date_output = date_output[1:11]
+    print "Observation date "+date_output
+    os.chdir('/home/562/meb562/CALS/')
+    cal_list = open('MWATS_cal_list.txt', 'r')
+    return_cal = None
+    for line in cal_list:
+        sdate  = line.split(',')[0]
+        cal_id = line.split(',')[1]
+        cal_id = cal_id.split(' ')[1]
+        if sdate == date_output:
+           print 'Recomended calibrator is '+cal_id
+           for cal in glob.glob('*.cal'):
+               cal_num = cal[0:10]
+               if cal_id.split('\n')[0] == cal_num:
+                  print "Found calibration file "+cal
+                  return_cal = '/home/562/meb562/CALS/'+cal
+    if return_cal == None:
+           print "No calibrator file found, please generate it"
+    return return_cal
+
 ####################################################
 # Read the location parset to find the paths
 locs = read_parset(loc_parset_file)
@@ -80,9 +108,12 @@ obs_id = sys.argv[1] # Get the obs_id we want to work on. Parsed to the script b
 
 parset = read_parset(parset_file)
 do_parset_cal = parset['do_parset_cal']
+do_MWATS_cal = parset['do_MWATS_cal']
 
 if do_parset_cal:
         cal = locs['cal_loc']
+if do_MWATS_cal:
+        cal = find_cal_mwats(obs_id)
 else:
         cal = find_cal(obs_id) # Look for a calibrator
 

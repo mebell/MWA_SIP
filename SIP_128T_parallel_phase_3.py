@@ -145,6 +145,7 @@ def WSClean(obs_id, clean_thresh):
         print 'Running WSClean'
         wbriggs = float(wbriggs) 
         wbriggs2 = float(wbriggs2)
+        do_variance = params['do_variance']
         # Name the selfcal images
         if doSelfcal: 
 		if wbriggs < 0:
@@ -211,7 +212,10 @@ def WSClean(obs_id, clean_thresh):
            os.system(wsclean_build+'/wsclean -joinpolarizations -pol xx,xy,yx,yy -channelsout 32 -mgain 0.95 -weight briggs '+str(wbriggs)+' -absmem 57 -name '+name+' -size '+str(wsize)+' '+str(wsize)+'  -scale '+str(wscale)+' -niter '+str(wniter)+' -threshold '+str(wthreshold)+' '+str(obs_id)+'.ms')
            for band in range(31): 
 		   if band <=32:
-		       subname = name+'-000'+str(band) 
+                       if band < 10:
+                          subname = name+'-000'+str(band)
+                       if band > 9:
+                          subname = name+'-00'+str(band) 
 		       os.system(anoko_build+'/beam -2014i -proto '+subname+'-XX-image.fits -ms '+str(obs_id)+'.ms')
 		       os.system(anoko_build+'/pbcorrect '+subname+' image.fits beam stokes') 
 		       os.system('mv stokes-I.fits '+subname+'_I.fits')
@@ -227,7 +231,9 @@ def WSClean(obs_id, clean_thresh):
 		       os.system('mv stokes-U.fits '+subname+'_U.fits')
 		       os.system('mv stokes-V.fits '+subname+'_V.fits')           
 		   os.system('rm  *beam-*')
-
+        if do_variance:
+            os.system('/short/ek6/MWA_Code/install/bin/wsclean -pol xx -channelsout 700 -weight briggs -1.0 -absmem 57 -name '+name+' -size 3072 3072  -scale 0.0125 -niter 0 '+str(obs_id)+'.ms')
+            # Did have this set to 192 channelsout
  #############################################################################
         
 
@@ -318,6 +324,7 @@ os.system('rm -rf '+job_path+'/*.fits')
 os.system('rm -rf '+job_path+'/*.log')
 os.system('rm -rf '+job_path+'/*.image')
 os.system('rm -rf '+job_path+'/*.beam')
+os.system('rm -rf '+job_path+'/*.tmp')
 
 #### Cut out short baselines ####
 doSplit = params['doSplit']

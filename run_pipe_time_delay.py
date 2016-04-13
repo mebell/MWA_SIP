@@ -99,11 +99,12 @@ for line in id_file:
      q_status = os.popen("qstat -u meb562 | grep job_file.g | wc").read()
      n_jobs = q_status.split()[0]
      print "File number "+str(n)+ ", n_jobs "+str(n_jobs)
-     while float(n_jobs) > 22:
+     while float(n_jobs) > 110:
          time.sleep(10)
          print "Waiting for queue to clear, "+str(n_jobs)+" jobs running"
          q_status = os.popen("qstat -u meb562 | grep job_file.g | wc").read()
          n_jobs = q_status.split()[0]
+     #if (check_done(line) == False):
      if (check_done(line) == False) and (check_dir_made(line) == False):
              print "Submitting jobs"
              submit_job(line)

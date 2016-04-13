@@ -7,6 +7,8 @@ import glob
 
 results_dir = '/short/ek6/meb562/SIP_results/MWA_SIP_out/'
 
+#results_dir = "/short/ek6/meb562/SIP_results/MWA_SIP_out/0953_subbands_v2"
+
 id_file = open('obs_id_list.txt', 'r')
 
 completed = 0
@@ -21,6 +23,7 @@ for obs_id in id_file:
     n_files = len(glob.glob('*'+obs_id+'*'))
     if n_files == 6: 
        completed +=1
+       #os.system('cp *'+str(obs_id)+'* /short/ek6/meb562/SIP_results/MWA_SIP_out/')
     else:
        bad_obs.append(obs_id)
        bad_obs_files.append(n_files)
@@ -39,3 +42,5 @@ else:
 print "Files to re-reduce:"
 for i in range(len(bad_obs)):
        print str(bad_obs[i])
+
+print len(bad_obs)
