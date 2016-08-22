@@ -1,0 +1,41 @@
+The MWATS pipeline.
+Written by Martin Bell with many contributions from Natasha + GLEAM.
+Latest update Aug 2016
+
+
+####################
+Components
+####################
+
+parset.txt: Settings to run the pipeline, including calibration and imaging options. 
+locs_parset.txt: Location settings, including output directories and the location of the calibration file.   
+SIP_128T_parallel_phase_3.py: Main imaging and calibration code. 
+run_pipe.py: Main script to run the pipeline on raijin. 
+obs_id_list.txt: List of observations to reduce. 
+add_log.py: Code to add the supercomputer output to the fits headers. 
+
+######################
+Workflow
+######################
+
+1.) Get list of observations to reduce. 
+2.) Create calibrator file (.cal) using ft_beam.py
+3.) Put cal file location into locs_parset.txt
+3.) python run_pipe.py
+
+The pipeline will get_data.py > pre_proc_pipe.py > SIP_128T_parallel_phase_3.py. 
+
+4.) python add_log.py. This will add the history into the headers. It has to be run after the main pipeline because it needs the log files produced after processing. 
+
+#######################
+
+To run this code on a single node machine:
+
+import os
+
+id_file = open('obs_id_list.txt', 'r')
+
+for line in id_file:  
+    os.system('python get_data.py '+line)
+    os.system('python pre_proc_pipe.py '+line)
+

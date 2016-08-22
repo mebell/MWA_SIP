@@ -4,65 +4,13 @@
 # Note, do not add spaces between the '=' for all parameters below - it will read
 # the white space and crash. Do not add extra lines either.
 ############################################################################ 
-doimage=False
-# doimage: If True, it will produce an image, if False it will just do
-# calibration (useful for stacking etc).
-dormsfind=False
-# dormsfind: Create a preview image from which to get the rms, for better cleaning
-dosub=False
-# dosub: True = prouduce subband images i.e. it will divide the 30 MHz 
-# into a number of subbands (defined by 'nfreqs') and produce images. 
-# If this is set to False, the full bandwidth image will be produced only. 
-nfreqs=1
-# nfreqs: Define the number of subband images you want to produce. Must have
-# dosub=True for this parameter to work.
-dopbcor=False
-# dopbcor: Create PB image(s) for all images, it will create an additional fits
-# image cube called beam_+obsname.fits. Requires 'delays_file' see below.  
-expedition='128'
-# expedition: This tells the pipeline the recommended flags for the expedition
-doflag=False
-###############################
-#         Imaging             #
-###############################
-imsize=[3072,3072]
-# imsize: try to keep this < 1024 otherwise things get slow.  
-cell='0.75arcmin'
-# cellsize: desired pixel size in the image.
-cleanweight='briggs'
-# cleanweight: used to define the weighting of uvdata, can also have robust,
-# natural etc. However in CASA 'briggs' weighting has an additional parameter
-# 'robust' which can be set between -2 (uniform) and +2 (natural) - which is
-# more flexible than just 'natural' etc. Also has 'superuniform'.
-robust=-1
-# -2 = uniform (best resolution)  and +2 = natural (best noise). 
-im_uvrange='>0.03klambda'
-niter=20000
-wprojplanes=1
-# wprojplanes: If you are debugging set to 1, to speed
-# things up considerably. When you need to produce your final image set to
-# ~512. 
-facets=1
-threshold=0.03
-# Minimum threshold for cleaning
-psfmode='clark'
-cyclefactor=1.5
-# Set to 100 if you have a good beam/sidelobes (very slow); set to 1.5 if
-# everythings looks ok. 
-imagermode='csclean'
-gridmode='widefield'
-mode='mfs'
-stokes=['XX','YY']
-doStokesI=False
-# This will generate a Stokes I map using immath, not you must request both XX
-# and YY in 'stokes' above otherwise it will crash. 
 ##################################
 #        Calibration             #
 ##################################
 cal_method=3
 # 1 = Setjy; 2 = mutlisource; 3 = copy solutions
 do_parset_cal=False # True = use calibrator in locs parset. False = search for approporaite calibrator.
-do_MWATS_cal=True   # Use the MWATS cals found in cals/MWATS_cal_list.txt 
+do_MWATS_cal=True  # Use the MWATS cals found in cals/MWATS_cal_list.txt 
 # Use True to apply a cal observation to a given night of MWATS. Use False to
 # let the code choose the best calibrator. Note, it will then use different
 # ones for the observations. Usually closest in time and position.  
@@ -98,9 +46,10 @@ doFlagWest=False
 doWSClean=True
 doSplit=True # Get rid of the short spacings 
 split_uv_range='>0.03klambda'   
-wniter=2000
-wsize=3072
-wscale=0.0125
+wniter=50000
+wsize=4000
+#wscale=0.0125
+wscale=0.0090909
 wthreshold=0.03
 wbriggs=-1.0
 doFullimage=True # Makes one single broadband image with "wbriggs" value. Turn off if you are doing subbands
@@ -108,6 +57,6 @@ dotwoimages=False # Make a second image with "wbriggs2"
 wbriggs2=1.0
 do_W_subbands=False # Make an image with 4 subbands, also produces full MFS image (with different naming convention). Need to change the qsub time - it will take longer ~6 hours.
 doSelfcal=True
-do_variance=False #Produce 160 MHz non-deconvolved subband images
+do_variance=False # Produce 160 MHz non-deconvolved subband images
 ########## Clean up ############
 doRemove=True # Remove all data after processing
