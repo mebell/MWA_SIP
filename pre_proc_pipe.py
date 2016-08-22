@@ -1,5 +1,10 @@
 import os
 import sys
+import pyfits
+import glob
+import commands
+from astropy import units as u
+from astropy.coordinates import SkyCoord
 
 # A script to run cotter then CASA. This must be in a 
 # different script to the download becuase we use different
@@ -29,12 +34,38 @@ def read_parset(parset_file):
             config_dict[items[0]] = eval(items[1])
     return config_dict
 
+#######################################################
+
+def add_history():
+    for file in (glob.glob('*_W_bm_1.0_SC_*.fits')) :
+        f = open(parset_file,'r')
+        print file
+        for line in f:
+            if line[0] == "#":
+               pass;
+            else:
+               line = line.split('\n')[0]
+               hdulist = pyfits.open(file, mode='update')
+               head = hdulist[0].header
+               add = line.split('#')[0]
+               head['HISTORY'] = add
+               hdulist.flush()
+               # Add software version numbers
+               wsclean_version = commands.getstatusoutput('wsclean -version')[1].split('\n')[1]
+               head['HISTORY'] = wsclean_version
+               cotter_version = commands.getstatusoutput('cotter -version')[1].split('\n')[0]
+               aoflagger_version = commands.getstatusoutput('cotter -version')[1].split('\n')[1]
+               head['HISTORY'] = cotter_version
+               head['HISTORY'] = aoflagger_version
+        hdulist.flush()
+
 ####################################################
 
 def run_cotter(obs_id):
     #os.system('make_metafits.py --gps='+str(obs_id))
     os.system('mv '+str(obs_id)+'/*_metafits_ppds.fits .')
-    os.system('cotter -o '+str(obs_id)+'.ms -mem 75 -timeres 2 -freqres 80 -m '+str(obs_id)+'.metafits '+str(obs_id)+'/*.fits') 
+    #os.system('cotter -o '+str(obs_id)+'.ms -mem 75 -timeres 2 -freqres 10 -m '+str(obs_id)+'.metafits '+str(obs_id)+'/*.fits') # Frequency resolution 10 KHz 
+    os.system('cotter -o '+str(obs_id)+'.ms -mem 75 -timeres 2 -freqres 80 -m '+str(obs_id)+'.metafits '+str(obs_id)+'/*.fits')  # Frequency resolution 80 KHz
 
 ####################################################
 # Read the location parset to find the paths
@@ -44,6 +75,19 @@ error_logs = locs['error_logs']
 msgen_loc    = locs['msgen_loc']
 results_dir = locs['results_dir']
 OBS_ID_LIST = open(SIP_home+'/obs_id_list.txt', 'r')
+
+######## Get the galactic b value ############
+
+def get_b(ms):
+        command = 'msinfo '+ms
+        term_out=os.popen(command).read()
+        s = term_out.split()
+        ra_in = s[len(s)-2].split(',')[1]
+        dec_in = s[len(s)-3].split('=')[1]
+        print 'Observation coordinates:'
+        print ra_in, dec_in
+        c = SkyCoord(ra=float(ra_in)*u.degree, dec=float(dec_in)*u.degree)
+        return c.galactic.b.deg
 
 ############## Main code ######################
 
@@ -75,10 +119,16 @@ else:
 	       print "Exiting no calibrator found"  
 	       os._exit(1)
 
+### Get the galactic b-value ###
+gal_b = get_b(ms = str(uvfits_dir)+'/'+str(obs_id)+".ms")
+print "Galactic b:"
+print gal_b
 ######### Run the CASA pipe ##########
 file_to_process = (str(uvfits_dir)+'/'+str(obs_id)+".ms") 
 print 'Created '+file_to_process+' : parsing to CASA for reduction' 
-os.system("/short/ek6/CASA/casapy-stable-42.0.26465-001-64b/casapy -c "+SIP_home+"/SIP_128T_parallel_phase_3.py  "+file_to_process+' '+cal)
+os.system("/short/ek6/CASA/casapy-stable-42.0.26465-001-64b/casapy -c "+SIP_home+"/SIP_128T_parallel_phase_3.py  "+file_to_process+' '+cal+' '+str(gal_b))
+# Add the parset to the header
+add_history()
 # Copy all the images to results dir. 
 os.system('cp *_I.fits '+results_dir)
 os.system('cp *_XX.fits '+results_dir)

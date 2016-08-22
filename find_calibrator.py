@@ -1,6 +1,9 @@
 import os, sys
 from subprocess import Popen, PIPE
 import glob
+
+# Given a list of obs_ids this code works out the best calibrators to use
+
 ####################################################
 #Parset files path(s)
 loc_parset_file    = '/home/562/meb562/MWA_SIP/locs_parset.txt'
@@ -29,7 +32,6 @@ SIP_home   = locs['SIP_home']
 
 # Work out which GPS ID / datafile we are going to work on
 id_file = open(SIP_home+'/obs_id_list.txt', 'r')
-#id_file = open(SIP_home+'/files_to_process/all_0953.txt', 'r')
 
 def find_cal(obs_id):
     obs_id = obs_id.split('\n')[0]
@@ -48,7 +50,7 @@ def find_cal(obs_id):
        print str(obs_id)+": cannot find suitable cal " 
        cal_id=None
        pass;
-    os.chdir('/home/562/meb562/CALS/')
+    os.chdir('/short/ek6/CALS/')
     cal_num = None
     return_cal = None 
     for cal in glob.glob('*.cal'):
@@ -76,8 +78,5 @@ for line in id_file:
 print "Get these cals"
 for cal in get_cals:
     print cal
-
-
-
 
 

@@ -48,14 +48,14 @@ def find_cal(obs_id):
        print str(obs_id)+": cannot find suitable cal "
        cal_id=None
        pass;
-    os.chdir('/home/562/meb562/CALS/')
+    os.chdir('/short/ek6/CALS/')
     cal_num = None
     return_cal = None
     for cal in glob.glob('*.cal'):
         cal_num = cal[0:10]
         if cal_id == cal_num:
            print "Found calibration file "+cal
-           return_cal = '/home/562/meb562/CALS/'+cal
+           return_cal = '/short/ek6/CALS/'+cal
     if return_cal == None:
            print "No calibrator file found, please generate it"
     return return_cal
@@ -70,7 +70,7 @@ def find_cal_mwats(obs_id):
     date_output = date_output.replace('/', '-')
     date_output = date_output[1:11]
     print "Observation date "+date_output
-    os.chdir('/home/562/meb562/CALS/')
+    os.chdir('/short/ek6/CALS/')
     cal_list = open('MWATS_cal_list.txt', 'r')
     return_cal = None
     for line in cal_list:
@@ -83,7 +83,7 @@ def find_cal_mwats(obs_id):
                cal_num = cal[0:10]
                if cal_id.split('\n')[0] == cal_num:
                   print "Found calibration file "+cal
-                  return_cal = '/home/562/meb562/CALS/'+cal
+                  return_cal = '/short/ek6/CALS/'+cal
     if return_cal == None:
            print "No calibrator file found, please generate it"
     return return_cal

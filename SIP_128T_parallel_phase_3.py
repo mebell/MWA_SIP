@@ -20,8 +20,7 @@ except:
    print 'mwa pb module did not import' 
 
 import mwapy
-
-
+import commands
 ############################################
 ##### Configuration-dependent path ########
 #Parset files path(s)
@@ -168,7 +167,10 @@ def WSClean(obs_id, clean_thresh):
         locs = read_parset(loc_parset_file)
         anoko_build = locs['anoko_build']
         if doFullimage:
-           os.system(wsclean_build+'/wsclean -joinpolarizations -pol xx,xy,yx,yy -mgain 0.95 -weight briggs '+str(wbriggs)+' -absmem 57 -name '+name+' -size '+str(wsize)+' '+str(wsize)+'  -scale '+str(wscale)+' -niter '+str(wniter)+' -threshold '+str(wthreshold)+' '+str(obs_id)+'.ms')
+           # Previous 
+           os.system(wsclean_build+'/wsclean -smallinversion -fitbeam -joinpolarizations -pol xx,xy,yx,yy -mgain 0.95 -weight briggs '+str(wbriggs)+' -absmem 57 -name '+name+' -size '+str(wsize)+' '+str(wsize)+'  -scale '+str(wscale)+' -niter '+str(wniter)+' -threshold '+str(wthreshold)+' '+str(obs_id)+'.ms')
+           # New 
+           #os.system(wsclean_build+'/wsclean -joinpolarizations -pol xx,xy,yx,yy -mgain 0.95 -weight briggs '+str(wbriggs)+' -absmem 57 -name '+name+' -size '+str(wsize)+' '+str(wsize)+'  -scale '+str(wscale)+' -niter '+str(wniter)+' -threshold '+str(wthreshold)+' -smallinversion -fitbeam -channelsout 4 -joinchannels '+str(obs_id)+'.ms')
            os.system(anoko_build+'/beam -2014i -proto '+name+'-XX-image.fits -ms '+str(obs_id)+'.ms')
            ######### Make the full images 
 	   os.system(anoko_build+'/pbcorrect '+name+' image.fits beam stokes')
@@ -209,7 +211,7 @@ def WSClean(obs_id, clean_thresh):
         ##################################################################
         # Do the subbands
         if do_W_subbands:
-           os.system(wsclean_build+'/wsclean -joinpolarizations -pol xx,xy,yx,yy -channelsout 32 -mgain 0.95 -weight briggs '+str(wbriggs)+' -absmem 57 -name '+name+' -size '+str(wsize)+' '+str(wsize)+'  -scale '+str(wscale)+' -niter '+str(wniter)+' -threshold '+str(wthreshold)+' '+str(obs_id)+'.ms')
+           os.system(wsclean_build+'/wsclean -joinpolarizations -pol xx,xy,yx,yy -channelsout 4 -mgain 0.95 -weight briggs '+str(wbriggs)+' -absmem 57 -name '+name+' -size '+str(wsize)+' '+str(wsize)+'  -scale '+str(wscale)+' -niter '+str(wniter)+' -threshold '+str(wthreshold)+' '+str(obs_id)+'.ms')
            for band in range(31): 
 		   if band <=32:
                        if band < 10:
@@ -232,8 +234,8 @@ def WSClean(obs_id, clean_thresh):
 		       os.system('mv stokes-V.fits '+subname+'_V.fits')           
 		   os.system('rm  *beam-*')
         if do_variance:
-            os.system('/short/ek6/MWA_Code/install/bin/wsclean -pol xx -channelsout 700 -weight briggs -1.0 -absmem 57 -name '+name+' -size 3072 3072  -scale 0.0125 -niter 0 '+str(obs_id)+'.ms')
-            # Did have this set to 192 channelsout
+            os.system('/short/ek6/MWA_Code/install/bin/wsclean -pol xx -channelsout 3072 -weight briggs -1.0 -absmem 57 -name '+name+' -size 2048 2048  -scale 0.0125 -mgain 0.95 -niter 200 '+str(obs_id)+'.ms')
+        # Image the xx only with either no or light deconvolution. Change channelsout accordingly for the spectral resolution. Note, you may have to change the cotter stage to produce a measurement set at the highest frequency resolution.  
  #############################################################################
         
 
@@ -275,6 +277,11 @@ def selfcal(obs_id):
         os.system('calibrate -minuv 60 -datacolumn CORRECTED_DATA -a 0.001 0.0001 '+str(obs_id)+'.ms '+str(obs_id)+'_selfcal.cal')
         # Apply the solutions 
         os.system('applysolutions -datacolumn CORRECTED_DATA -copy '+str(obs_id)+'.ms '+str(obs_id)+'_selfcal.cal')
+        # Do one more round of flagging
+        os.system('aoflagger -v -column CORRECTED_DATA '+str(obs_id)+'.ms')
+ 
+
+
 
 ########## Find the RMS of an image using the inter-quartile range ##########
 
@@ -289,7 +296,7 @@ def mes_RMS(fitsimage):
     my_output=imstat('preview.image', box='998,874,2180,2124')
     foundrms=my_output['rms']
     return foundrms
-       
+      
 ############ Run the code ##################
 print '---------------------------------'
 print 'MWA 128T Standard Imaging Pipeline'
@@ -300,6 +307,7 @@ obspath = sys.argv[3]
 filename = obspath.split('/')[-1]
 obsid = filename.split('.')[0]
 cal = sys.argv[4]
+gal_b = sys.argv[5]
 
 params = read_parset(parset_file) # Get the parameter set file 
 
@@ -350,6 +358,9 @@ if doFlagWest:
 autocal(obspath, cal)
 print "Calibration finished"
 
+# Look to see if we need to peel
+os.system('/home/562/meb562/MWA_SIP/peel.go '+str(obsid))
+
 #### Image ####
 doWSClean = params['doWSClean']
 doSelfcal = params['doSelfcal']
@@ -365,20 +376,16 @@ if doSelfcal:
    XX_YY_RMSs.append(mes_RMS(fitsimage=YY_image)[0])
    print "XX and YY lightly cleaned image RMS':"
    print XX_YY_RMSs
-   # Use the max RMS of the polarsiations for CLEANing
-   best_threshold = max(XX_YY_RMSs)*3
+   # Check the distance from the GP 
+   if -15.0 <= float(gal_b) <= 15.0:
+      print 'Pointing centre is close to the GP, will lower clean threshold to one sigma'
+      best_threshold = max(XX_YY_RMSs)*1.0
+   else:
+      # Use the max RMS of the polarsiations for CLEANing times three
+      best_threshold = max(XX_YY_RMSs)*3.0
    print "Using clean threshold = "+str(best_threshold)
    WSClean(obsid, clean_thresh=best_threshold)
-   #WSClean(obsid, clean_thresh=None)
+
 ############################################
-
-
-
-
-
-
-
-
-
 
 

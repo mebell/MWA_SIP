@@ -5,10 +5,11 @@ import glob
 "Script to check the correct number of images have been made by the SIP"
 
 
-results_dir = '/short/ek6/meb562/SIP_results/MWA_SIP_out/'
+#results_dir = '/short/ek6/meb562/SIP_results/MWA_SIP_out/'
 
-#results_dir = "/short/ek6/meb562/SIP_results/MWA_SIP_out/0953_subbands_v2"
+results_dir = "/short/ek6/meb562/SIP_results/MWA_SIP_out/mwats"
 
+#id_file = open('/home/562/meb562/MWA_SIP/files_to_process/tara_trans_v2.csv.txt', 'r')
 id_file = open('obs_id_list.txt', 'r')
 
 completed = 0
@@ -44,3 +45,7 @@ for i in range(len(bad_obs)):
        print str(bad_obs[i])
 
 print len(bad_obs)
+print '______________________________'
+print 'Completed files: '+str(completed)+'/'+str(count)
+print '______________________________'
+print str(os.system('du -sh /short/ek6/meb562/SIP_results/MWA_SIP_out/'))
